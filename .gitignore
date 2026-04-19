@@ -1,6 +1,8 @@
 info
 prompts
 .env
+secrets.js
 *.log
 *.tmp
 *.temp
+plan.md

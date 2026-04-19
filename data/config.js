@@ -1,8 +1,8 @@
 // Конфигурация проекта VIBE TRAVEL 03
+// Секретные ключи подключаются из secrets.js (файл в .gitignore)
 const CONFIG = {
-    // Вставьте сюда ваш реальный API-ключ Яндекс.Карт
-    // Получить ключ можно в кабинете разработчика Яндекс: https://developer.tech.yandex.ru/
-    YANDEX_MAP_KEY: 'ВАШ_API_КЛЮЧ_ЗДЕСЬ', 
+    // API-ключ Яндекс.Карт (из secrets.js)
+    YANDEX_MAP_KEY: typeof SECRETS !== 'undefined' ? SECRETS.YANDEX_MAP_KEY : '',
     
     PROJECT_NAME: 'VIBE TRAVEL 03',
     VERSION: '1.0.0',

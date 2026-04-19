@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="src/css/main.css">
     <link rel="stylesheet" href="src/css/components.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="data/secrets.js"></script>
     <script src="data/config.js"></script>
 </head>
 <body>
@@ -24,20 +25,20 @@
 
     <script src="src/js/main.js"></script>
     <script src="src/js/pdfGenerator.js"></script>
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=YOUR_API_KEY&lang=ru_RU"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=${CONFIG.YANDEX_MAP_KEY}&lang=ru_RU"></script>
     <script>
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
 
         if(!id) {
-            document.getElementById('routeDetail').innerHTML = '<div class="container" style="padding-top:100px; text-align:center"><h1>Маршрут не найден</h1><a href="routes.html">В каталог</a></div>';
+            document.getElementById('routeDetail').innerHTML = '<div class="container" style="padding-top:100px; text-align:center"><h1>Маршрут не найден</h1><a href="routes.html" class="btn-pdf">В каталог</a></div>';
         } else {
             fetch('data/routes.json')
                 .then(r => r.json())
                 .then(data => {
                     const route = data.find(x => x.id == id);
                     if(!route) {
-                        document.getElementById('routeDetail').innerHTML = '<div class="container" style="padding-top:100px; text-align:center"><h1>404</h1></div>';
+                        document.getElementById('routeDetail').innerHTML = '<div class="container" style="padding-top:100px; text-align:center"><h1>404 - Маршрут не найден</h1><a href="routes.html" class="btn-pdf">В каталог</a></div>';
                         return;
                     }
                     renderDetail(route);
@@ -47,6 +48,7 @@
         function renderDetail(route) {
             const gradient = `linear-gradient(135deg, ${route.gradient[0]}, ${route.gradient[1]})`;
             const container = document.getElementById('routeDetail');
+            const isFav = getFavorites().includes(route.id);
             
             const scheduleHtml = route.schedule.map(s => `
                 <div class="schedule-item">
@@ -64,7 +66,7 @@
                         <div class="info-block">
                             <h2>О вайбе</h2>
                             <p>${route.fullDescription}</p>
-                            <div style="margin-top:1rem">
+                            <div class="card-tags" style="margin-top:1rem">
                                 ${route.vibes.map(v => `<span class="tag">${v}</span>`).join('')}
                             </div>
                         </div>
@@ -74,18 +76,21 @@
                         </div>
                         <div class="info-block">
                             <h2>Логистика</h2>
-                            <p><strong>Как добраться:</strong> ${route.logistics.howToGet}</p>
-                            <p><strong>Бюджет:</strong> ${route.logistics.budgetDetails}</p>
-                            <p><strong>Сезон:</strong> ${route.logistics.seasonality}</p>
+                            <p><strong>🚗 Как добраться:</strong> ${route.logistics.howToGet}</p>
+                            <p><strong>💰 Бюджет:</strong> ${route.logistics.budgetDetails}</p>
+                            <p><strong>📅 Сезон:</strong> ${route.logistics.seasonality}</p>
                             <button class="btn-pdf" onclick="generatePDF(${route.id})">📄 Скачать PDF-гид</button>
                         </div>
                     </div>
                     <div>
                         <div class="info-block">
-                            <h3>Инфо</h3>
-                            <p>⏱ ${route.duration}</p>
-                            <p>💰 ${route.budget}</p>
-                            <button class="btn-fav active" data-id="${route.id}" style="font-size:2rem; margin-top:1rem; color:var(--color-danger)">❤️ В избранное</button>
+                            <h3>Информация</h3>
+                            <p style="display: flex; align-items: center; gap: 8px;">⏱ <strong>Длительность:</strong> ${route.duration}</p>
+                            <p style="display: flex; align-items: center; gap: 8px;">💰 <strong>Бюджет:</strong> ${route.budget}</p>
+                            <p style="display: flex; align-items: center; gap: 8px;">📆 <strong>Сезон:</strong> ${route.season}</p>
+                            <button class="btn-fav-detail ${isFav ? 'active' : ''}" data-id="${route.id}">
+                                ${isFav ? '❤️ В избранном' : '🤍 Добавить в избранное'}
+                            </button>
                         </div>
                         <div id="map" class="map-container"></div>
                     </div>
@@ -97,22 +102,34 @@
         }
 
         function initMap(route) {
-            if(typeof ymaps === 'undefined') return;
+            if(typeof ymaps === 'undefined') {
+                document.getElementById('map').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;background:#f5f5f5;color:#666;">Карта загружается...</div>';
+                return;
+            }
             ymaps.ready(() => {
                 const map = new ymaps.Map("map", {
                     center: route.points[0].coordinates,
-                    zoom: 9
+                    zoom: 9,
+                    controls: ['zoomControl']
                 });
 
                 const coords = route.points.map(p => p.coordinates);
                 
                 // Polyline
-                const polyline = new ymaps.Polyline(coords, {}, { strokeColor: route.gradient[0], strokeWidth: 4 });
+                const polyline = new ymaps.Polyline(coords, {}, { 
+                    strokeColor: route.gradient[0], 
+                    strokeWidth: 4,
+                    strokeOpacity: 0.8
+                });
                 map.geoObjects.add(polyline);
 
                 // Placemarks
-                route.points.forEach(p => {
-                    const mark = new ymaps.Placemark(p.coordinates, { balloonContent: p.name });
+                route.points.forEach((p, i) => {
+                    const mark = new ymaps.Placemark(p.coordinates, { 
+                        balloonContent: `<strong>${p.name}</strong>${i === 0 ? '<br><em>Точка старта</em>' : (i === route.points.length - 1 ? '<br><em>Финиш</em>' : '')}`
+                    }, {
+                        preset: i === 0 ? 'islands#greenDotIcon' : (i === route.points.length - 1 ? 'islands#redDotIcon' : 'islands#blueCircleIcon')
+                    });
                     map.geoObjects.add(mark);
                 });
 

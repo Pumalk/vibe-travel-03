@@ -25,7 +25,7 @@
       { "name": "Скала Шаманка", "coordinates": [51.850, 107.600] }
     ],
     "images": [
-      { "src": "assets/images/placeholders/route1_1.jpg", "alt": "Байкал" }
+      { "src": "assets/images/baikal.jpg", "alt": "Байкал" }
     ]
   },
   {
@@ -51,7 +51,7 @@
       { "name": "Площадь Советов", "coordinates": [51.827, 107.606] },
       { "name": "Этнокомплекс Тайга", "coordinates": [51.850, 107.550] }
     ],
-    "images": [{ "src": "assets/images/placeholders/route2_1.jpg", "alt": "Буузы" }]
+    "images": [{ "src": "assets/images/baikal.jpg", "alt": "Буузы" }]
   },
   {
     "id": 3,
@@ -75,7 +75,7 @@
       { "name": "Аршан", "coordinates": [51.593, 102.388] },
       { "name": "Водопад Катушка", "coordinates": [51.600, 102.400] }
     ],
-    "images": [{ "src": "assets/images/placeholders/route3_1.jpg", "alt": "Аршан" }]
+    "images": [{ "src": "assets/images/baikal.jpg", "alt": "Аршан" }]
   },
   {
     "id": 4,
@@ -100,7 +100,7 @@
       { "name": "Озеро Котокель", "coordinates": [52.150, 108.100] },
       { "name": "Перевал", "coordinates": [52.100, 108.050] }
     ],
-    "images": [{ "src": "assets/images/placeholders/route4_1.jpg", "alt": "Джип" }]
+    "images": [{ "src": "assets/images/baikal.jpg", "alt": "Джип" }]
   },
   {
     "id": 5,
@@ -123,7 +123,7 @@
     "points": [
       { "name": "Троицкий собор", "coordinates": [51.333, 106.833] }
     ],
-    "images": [{ "src": "assets/images/placeholders/route5_1.jpg", "alt": "Селенгинск" }]
+    "images": [{ "src": "assets/images/baikal.jpg", "alt": "Селенгинск" }]
   },
   {
     "id": 6,
@@ -149,7 +149,7 @@
       { "name": "Ольхон", "coordinates": [53.200, 107.300] },
       { "name": "Мыс Хобой", "coordinates": [53.350, 107.380] }
     ],
-    "images": [{ "src": "assets/images/placeholders/route6_1.jpg", "alt": "Лед" }]
+    "images": [{ "src": "assets/images/baikal.jpg", "alt": "Лед" }]
   },
   {
     "id": 7,
@@ -175,7 +175,7 @@
     "points": [
       { "name": "Гусиное Озеро", "coordinates": [51.280, 106.530] }
     ],
-    "images": [{ "src": "assets/images/placeholders/route7_1.jpg", "alt": "Дацан" }]
+    "images": [{ "src": "assets/images/baikal.jpg", "alt": "Дацан" }]
   },
   {
     "id": 8,
@@ -202,7 +202,7 @@
     "points": [
       { "name": "Река Баргузин", "coordinates": [53.500, 109.500] }
     ],
-    "images": [{ "src": "assets/images/placeholders/route8_1.jpg", "alt": "Река" }]
+    "images": [{ "src": "assets/images/baikal.jpg", "alt": "Река" }]
   },
   {
     "id": 9,
@@ -225,7 +225,7 @@
     "points": [
       { "name": "Голова Ленина", "coordinates": [51.828, 107.605] }
     ],
-    "images": [{ "src": "assets/images/placeholders/route9_1.jpg", "alt": "Город" }]
+    "images": [{ "src": "assets/images/baikal.jpg", "alt": "Город" }]
   },
   {
     "id": 10,

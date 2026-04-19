@@ -4,47 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>События и Контент | VIBE TRAVEL 03</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="src/css/main.css">
     <link rel="stylesheet" href="src/css/components.css">
+    <script src="data/secrets.js"></script>
     <script src="data/config.js"></script>
 </head>
 <body>
     <header class="header">
         <div class="container header__inner">
             <a href="index.html" class="logo">VIBE TRAVEL 03</a>
-            <nav class="nav"><ul class="nav__list"><li><a href="routes.html">Маршруты</a></li></ul></nav>
+            <nav class="nav">
+                <ul class="nav__list">
+                    <li><a href="routes.html" class="nav__link">Маршруты</a></li>
+                    <li><a href="map.html" class="nav__link">Карта</a></li>
+                </ul>
+            </nav>
+            <a href="favorites.html" class="fav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span class="fav-count">0</span>
+            </a>
         </div>
     </header>
 
     <main class="container" style="padding-top: 100px;">
-        <h1 class="section-title">Афиша 2026</h1>
-        <div id="eventsContainer" class="events-list">
-            <!-- Events -->
-        </div>
+        <section class="events-section">
+            <h1 class="section-title">Афиша 2026</h1>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem;">Культурные события и фестивали Бурятии</p>
+            <div id="eventsContainer" class="events-list">
+                <!-- Events loaded by JS -->
+            </div>
+        </section>
 
-        <h1 class="section-title" style="margin-top: 4rem;">Видео-вайб</h1>
-        <div class="video-wrapper wave-effect">
-            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="video-wrapper wave-effect">
-            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0" frameborder="0" allowfullscreen></iframe>
-        </div>
+        <section class="video-section">
+            <h2 class="section-title">Видео-вайб</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem;">Почувствуй атмосферу Бурятии</p>
+            <div class="video-grid">
+                <div class="video-wrapper wave-effect">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video-wrapper wave-effect">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video-wrapper wave-effect">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
     </main>
 
+    <footer class="footer">
+        <div class="container">
+            <svg class="footer-ornament" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="2" fill="none"/>
+                <path d="M50 10 L50 90 M10 50 L90 50" stroke="currentColor" stroke-width="2"/>
+                <circle cx="50" cy="50" r="10" fill="currentColor"/>
+            </svg>
+            <p>&copy; 2026 VIBE TRAVEL 03. Проект для конкурса БГСХА.</p>
+        </div>
+    </footer>
+
+    <script src="src/js/main.js"></script>
     <script>
         fetch('data/events.json')
             .then(r => r.json())
             .then(events => {
                 const container = document.getElementById('eventsContainer');
                 events.forEach(ev => {
+                    const dateParts = ev.date.split(' ');
                     const div = document.createElement('div');
-                    div.className = 'event-card';
+                    div.className = 'event-card fade-in';
                     div.innerHTML = `
-                        <div class="event-date">${ev.date.split(' ')[0]}</div>
-                        <div>
+                        <div class="event-date">
+                            <div class="month">${dateParts[0]}</div>
+                            <div class="day">${dateParts[1]}</div>
+                        </div>
+                        <div class="event-info">
                             <h3>${ev.title}</h3>
-                            <p>${ev.location} • ${ev.description}</p>
+                            <p>📍 ${ev.location}</p>
+                            <p>${ev.description}</p>
                         </div>
                     `;
                     container.appendChild(div);

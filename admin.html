@@ -4,27 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Админ-панель | VIBE TRAVEL 03</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="src/css/main.css">
     <link rel="stylesheet" href="src/css/components.css">
+    <script src="data/secrets.js"></script>
+    <script src="data/config.js"></script>
+    <script>
+        // Password protection
+        const password = prompt('Введите пароль администратора:');
+        if (password !== 'admin2026') {
+            window.location.href = 'index.html';
+        }
+    </script>
 </head>
 <body>
     <header class="header">
         <div class="container header__inner">
-            <a href="index.html" class="logo">ADMIN PANEL</a>
+            <a href="index.html" class="logo">⚙️ ADMIN PANEL</a>
+            <a href="index.html" class="btn-pdf" style="padding: 0.5rem 1rem; font-size: 0.9rem;">На главную</a>
         </div>
     </header>
 
     <main class="container" style="padding-top: 100px;">
         <form id="routeForm" class="admin-form">
-            <h2>Конструктор маршрута</h2>
+            <h2>🛠 Конструктор маршрута</h2>
+            <p style="color: #666; margin-bottom: 1.5rem;">Создайте новый маршрут и добавьте его в базу</p>
+            
             <div class="form-group">
                 <label>ID</label>
                 <input type="number" id="r_id" class="form-control" required>
             </div>
             <div class="form-group">
                 <label>Название</label>
-                <input type="text" id="r_title" class="form-control" required>
+                <input type="text" id="r_title" class="form-control" required placeholder="Энергия Байкала: 3 дня перезагрузки">
             </div>
             <div class="form-group">
                 <label>Вайбы (через запятую)</label>
@@ -32,29 +44,47 @@
             </div>
             <div class="form-group" style="display:flex; gap:10px;">
                 <div style="flex:1">
-                    <label>Цвет 1</label>
+                    <label>Цвет градиента 1</label>
                     <input type="color" id="r_g1" class="form-control" value="#2E8B57">
                 </div>
                 <div style="flex:1">
-                    <label>Цвет 2</label>
+                    <label>Цвет градиента 2</label>
                     <input type="color" id="r_g2" class="form-control" value="#0077BE">
                 </div>
             </div>
-            <div class="form-group">
-                <label>Длительность</label>
-                <input type="text" id="r_dur" class="form-control" placeholder="3 дня">
+            <div class="form-row" style="display: flex; gap: 1rem;">
+                <div class="form-group" style="flex: 1;">
+                    <label>Длительность</label>
+                    <input type="text" id="r_dur" class="form-control" placeholder="3 дня">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Бюджет</label>
+                    <input type="text" id="r_bud" class="form-control" placeholder="от 5000 ₽">
+                </div>
             </div>
             <div class="form-group">
-                <label>Бюджет</label>
-                <input type="text" id="r_bud" class="form-control" placeholder="от 5000 ₽">
+                <label>Сезон</label>
+                <select id="r_season" class="form-control">
+                    <option value="лето">Лето</option>
+                    <option value="зима">Зима</option>
+                    <option value="круглый год">Круглый год</option>
+                </select>
             </div>
-            <button type="submit" class="btn-pdf">Сгенерировать JSON</button>
+            <div class="form-group">
+                <label>Краткое описание</label>
+                <input type="text" id="r_desc" class="form-control" placeholder="Почувствуй мощь священного озера...">
+            </div>
+            <div class="form-group">
+                <label>Полное описание</label>
+                <textarea id="r_fullDesc" class="form-control" rows="3" placeholder="Погружение в атмосферу байкальской тайги..."></textarea>
+            </div>
+            <button type="submit" class="btn-admin">✨ Сгенерировать JSON</button>
         </form>
 
         <div class="container" style="max-width:800px; margin-bottom:4rem;">
-            <label>Результат (скопируйте и вставьте в routes.json):</label>
-            <textarea id="jsonOutput" class="form-control" rows="10"></textarea>
-            <button onclick="copyJson()" class="btn-pdf" style="margin-top:10px;">Копировать</button>
+            <label style="font-weight: 600; display: block; margin-bottom: 0.5rem;">📋 Результат (скопируйте и вставьте в routes.json):</label>
+            <textarea id="jsonOutput" class="output-area" rows="15" readonly></textarea>
+            <button onclick="copyJson()" class="btn-pdf" style="margin-top: 1rem;">📋 Копировать в буфер</button>
         </div>
     </main>
 
