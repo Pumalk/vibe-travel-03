@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Маршрут | VIBE TRAVEL 03</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/css/main.css">
+    <link rel="stylesheet" href="src/css/components.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="data/config.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container header__inner">
+            <a href="index.html" class="logo">VIBE TRAVEL 03</a>
+            <a href="routes.html" style="font-weight:600">← Назад</a>
+        </div>
+    </header>
+
+    <div id="routeDetail" class="route-detail">
+        <!-- Content injected by JS -->
+    </div>
+
+    <script src="src/js/main.js"></script>
+    <script src="src/js/pdfGenerator.js"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=YOUR_API_KEY&lang=ru_RU"></script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+
+        if(!id) {
+            document.getElementById('routeDetail').innerHTML = '<div class="container" style="padding-top:100px; text-align:center"><h1>Маршрут не найден</h1><a href="routes.html">В каталог</a></div>';
+        } else {
+            fetch('data/routes.json')
+                .then(r => r.json())
+                .then(data => {
+                    const route = data.find(x => x.id == id);
+                    if(!route) {
+                        document.getElementById('routeDetail').innerHTML = '<div class="container" style="padding-top:100px; text-align:center"><h1>404</h1></div>';
+                        return;
+                    }
+                    renderDetail(route);
+                });
+        }
+
+        function renderDetail(route) {
+            const gradient = `linear-gradient(135deg, ${route.gradient[0]}, ${route.gradient[1]})`;
+            const container = document.getElementById('routeDetail');
+            
+            const scheduleHtml = route.schedule.map(s => `
+                <div class="schedule-item">
+                    <h4>День ${s.day}: ${s.title}</h4>
+                    <p>${s.description}</p>
+                </div>
+            `).join('');
+
+            container.innerHTML = `
+                <div class="detail-header" style="background: ${gradient}">
+                    <h1>${route.title}</h1>
+                </div>
+                <div class="container detail-content">
+                    <div>
+                        <div class="info-block">
+                            <h2>О вайбе</h2>
+                            <p>${route.fullDescription}</p>
+                            <div style="margin-top:1rem">
+                                ${route.vibes.map(v => `<span class="tag">${v}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="info-block">
+                            <h2>Программа</h2>
+                            ${scheduleHtml}
+                        </div>
+                        <div class="info-block">
+                            <h2>Логистика</h2>
+                            <p><strong>Как добраться:</strong> ${route.logistics.howToGet}</p>
+                            <p><strong>Бюджет:</strong> ${route.logistics.budgetDetails}</p>
+                            <p><strong>Сезон:</strong> ${route.logistics.seasonality}</p>
+                            <button class="btn-pdf" onclick="generatePDF(${route.id})">📄 Скачать PDF-гид</button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="info-block">
+                            <h3>Инфо</h3>
+                            <p>⏱ ${route.duration}</p>
+                            <p>💰 ${route.budget}</p>
+                            <button class="btn-fav active" data-id="${route.id}" style="font-size:2rem; margin-top:1rem; color:var(--color-danger)">❤️ В избранное</button>
+                        </div>
+                        <div id="map" class="map-container"></div>
+                    </div>
+                </div>
+            `;
+
+            initMap(route);
+            initFavorites();
+        }
+
+        function initMap(route) {
+            if(typeof ymaps === 'undefined') return;
+            ymaps.ready(() => {
+                const map = new ymaps.Map("map", {
+                    center: route.points[0].coordinates,
+                    zoom: 9
+                });
+
+                const coords = route.points.map(p => p.coordinates);
+                
+                // Polyline
+                const polyline = new ymaps.Polyline(coords, {}, { strokeColor: route.gradient[0], strokeWidth: 4 });
+                map.geoObjects.add(polyline);
+
+                // Placemarks
+                route.points.forEach(p => {
+                    const mark = new ymaps.Placemark(p.coordinates, { balloonContent: p.name });
+                    map.geoObjects.add(mark);
+                });
+
+                map.setBounds(map.geoObjects.getBounds(), { checkZoomRange: true });
+            });
+        }
+    </script>
+</body>
+</html>

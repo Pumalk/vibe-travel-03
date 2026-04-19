@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог маршрутов | VIBE TRAVEL 03</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/css/main.css">
+    <link rel="stylesheet" href="src/css/components.css">
+    <script src="data/config.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container header__inner">
+            <a href="index.html" class="logo">VIBE TRAVEL 03</a>
+            <a href="favorites.html" class="fav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span class="fav-count">0</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="container" style="padding-top: 100px;">
+        <button class="filter-toggle">⚙️ Фильтры и сортировка</button>
+        <div class="overlay"></div>
+        
+        <div class="filters-panel">
+            <div class="filter-group">
+                <label>Вайбы (AND)</label>
+                <div class="filter-options">
+                    <label class="checkbox-label"><input type="checkbox" name="vibe" value="#кайфовый_ракурс" class="filter-option">#кайфовый_ракурс</label>
+                    <label class="checkbox-label"><input type="checkbox" name="vibe" value="#цифровой_детокс" class="filter-option">#цифровой_детокс</label>
+                    <label class="checkbox-label"><input type="checkbox" name="vibe" value="#место_силы" class="filter-option">#место_силы</label>
+                    <label class="checkbox-label"><input type="checkbox" name="vibe" value="#ветер_в_лицо" class="filter-option">#ветер_в_лицо</label>
+                    <label class="checkbox-label"><input type="checkbox" name="vibe" value="#буузы_и_точка" class="filter-option">#буузы_и_точка</label>
+                    <label class="checkbox-label"><input type="checkbox" name="vibe" value="#в_дикую" class="filter-option">#в_дикую</label>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <label>Длительность</label>
+                <select name="duration" class="form-control filter-option" style="width: auto;">
+                    <option value="">Любая</option>
+                    <option value="short">1-2 дня</option>
+                    <option value="medium">3-4 дня</option>
+                    <option value="long">5+ дней</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Сортировка</label>
+                <select id="sortSelect" class="form-control" style="width: auto;">
+                    <option value="default">По умолчанию</option>
+                    <option value="duration_asc">Сначала короткие</option>
+                    <option value="budget_asc">Сначала дешевые</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="routesContainer" class="routes-grid">
+            <!-- Cards injected by JS -->
+            <p>Загрузка маршрутов...</p>
+        </div>
+    </main>
+
+    <script src="src/js/main.js"></script>
+    <script src="src/js/filters.js"></script>
+</body>
+</html>

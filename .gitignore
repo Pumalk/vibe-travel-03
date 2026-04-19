@@ -1,0 +1,5 @@
+info
+.env
+*.log
+*.tmp
+*.temp

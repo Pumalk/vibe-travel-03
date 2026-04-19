@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIBE TRAVEL 03 | Бурятия. Найди свой вайб</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/css/main.css">
+    <link rel="stylesheet" href="src/css/components.css">
+    <script src="data/config.js"></script>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container header__inner">
+            <a href="index.html" class="logo">VIBE TRAVEL 03</a>
+            <nav class="nav">
+                <ul class="nav__list">
+                    <li><a href="index.html" class="nav__link">Главная</a></li>
+                    <li><a href="routes.html" class="nav__link">Маршруты</a></li>
+                    <li><a href="map.html" class="nav__link">Карта</a></li>
+                    <li><a href="content.html" class="nav__link">События</a></li>
+                </ul>
+            </nav>
+            <a href="favorites.html" class="fav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span class="fav-count">0</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero__bg"></div>
+        <div class="hero__content container fade-in">
+            <h1>БУРЯТИЯ.<br>НАЙДИ СВОЙ ВАЙБ</h1>
+            <p class="hero__subtitle">Цифровой гид по эмоциям и приключениям</p>
+            <a href="routes.html" class="btn-pdf" style="background: white; color: var(--color-baikal);">Выбрать маршрут</a>
+        </div>
+    </section>
+
+    <!-- Vibes Selector -->
+    <section class="vibes-section container">
+        <h2 class="section-title">Выбери настроение</h2>
+        <div class="vibes-grid">
+            <button class="vibe-btn" onclick="selectVibe('#кайфовый_ракурс')">📸 #кайфовый_ракурс</button>
+            <button class="vibe-btn" onclick="selectVibe('#цифровой_детокс')">🌿 #цифровой_детокс</button>
+            <button class="vibe-btn" onclick="selectVibe('#место_силы')">🙏 #место_силы</button>
+            <button class="vibe-btn" onclick="selectVibe('#ветер_в_лицо')">🌬 #ветер_в_лицо</button>
+            <button class="vibe-btn" onclick="selectVibe('#буузы_и_точка')">🥟 #буузы_и_точка</button>
+            <button class="vibe-btn" onclick="selectVibe('#в_дикую')">🏔 #в_дикую</button>
+        </div>
+    </section>
+
+    <!-- Top Routes Preview -->
+    <section class="container" style="padding: 4rem 0;">
+        <h2 class="section-title">Популярное сейчас</h2>
+        <div id="topRoutes" class="routes-grid">
+            <!-- Injected via JS -->
+        </div>
+    </section>
+
+    <!-- Mini Map -->
+    <section class="container" style="padding-bottom: 4rem;">
+        <h2 class="section-title">Живая карта</h2>
+        <div id="miniMap" style="height: 400px; border-radius: 16px; overflow: hidden;"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <svg class="footer-ornament" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="2" fill="none"/>
+                <path d="M50 10 L50 90 M10 50 L90 50" stroke="currentColor" stroke-width="2"/>
+                <circle cx="50" cy="50" r="10" fill="currentColor"/>
+            </svg>
+            <p>&copy; 2026 VIBE TRAVEL 03. Проект для конкурса БГСХА.</p>
+        </div>
+    </footer>
+
+    <!-- Easter Egg Modal -->
+    <div id="ornamentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Сила предков</h3>
+            <svg class="ornament-anim" viewBox="0 0 100 100">
+                <path d="M50 0 L60 40 L100 50 L60 60 L50 100 L40 60 L0 50 L40 40 Z" fill="#FFD700"/>
+            </svg>
+        </div>
+    </div>
+
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=YOUR_API_KEY&lang=ru_RU"></script>
+    <script src="src/js/main.js"></script>
+    <script>
+        function selectVibe(vibe) {
+            localStorage.setItem(CONFIG.STORAGE_KEYS.LAST_VIBE, vibe);
+            window.location.href = `routes.html?vibe=${encodeURIComponent(vibe)}`;
+        }
+
+        // Load Top Routes
+        fetch('data/routes.json')
+            .then(r => r.json())
+            .then(data => {
+                const container = document.getElementById('topRoutes');
+                data.slice(0, 5).forEach(route => {
+                    const div = document.createElement('div');
+                    div.className = 'route-card fade-in';
+                    div.innerHTML = `
+                        <div class="card-img" style="background: linear-gradient(135deg, ${route.gradient[0]}, ${route.gradient[1]})">Фото</div>
+                        <div class="card-body">
+                            <h3 class="card-title">${route.title}</h3>
+                            <a href="route.html?id=${route.id}" style="color:var(--color-baikal)">Подробнее →</a>
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+            });
+
+        // Init Mini Map (Lazy)
+        const mapObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting && !window.mapInitialized) {
+                    initMiniMap();
+                    window.mapInitialized = true;
+                }
+            });
+        });
+        mapObserver.observe(document.getElementById('miniMap'));
+
+        function initMiniMap() {
+            if(typeof ymaps === 'undefined') return;
+            ymaps.ready(() => {
+                const myMap = new ymaps.Map("miniMap", {
+                    center: [51.8, 107.6],
+                    zoom: 7,
+                    controls: []
+                });
+                
+                fetch('data/routes.json').then(r=>r.json()).then(routes => {
+                    routes.forEach(route => {
+                        if(route.points && route.points.length > 0) {
+                            const p = route.points[0];
+                            const placemark = new ymaps.Placemark(p.coordinates, {
+                                balloonContent: route.title
+                            }, { preset: 'islands#blueCircleIcon' });
+                            myMap.geoObjects.add(placemark);
+                        }
+                    });
+                });
+            });
+        }
+    </script>
+</body>
+</html>

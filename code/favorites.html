@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Избранное | VIBE TRAVEL 03</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/css/main.css">
+    <link rel="stylesheet" href="src/css/components.css">
+    <script src="data/config.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container header__inner">
+            <a href="index.html" class="logo">VIBE TRAVEL 03</a>
+        </div>
+    </header>
+
+    <main class="container" style="padding-top: 100px;">
+        <h1 class="section-title">Моё избранное ❤️</h1>
+        <div id="favContainer" class="routes-grid"></div>
+    </main>
+
+    <script src="src/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const favIds = getFavorites();
+            const container = document.getElementById('favContainer');
+
+            if(favIds.length === 0) {
+                container.innerHTML = '<p>Здесь пока пусто. Добавь маршруты в каталоге!</p>';
+                return;
+            }
+
+            fetch('data/routes.json')
+                .then(r => r.json())
+                .then(allRoutes => {
+                    const favRoutes = allRoutes.filter(r => favIds.includes(r.id));
+                    
+                    favRoutes.forEach(route => {
+                        const gradient = `linear-gradient(135deg, ${route.gradient[0]}, ${route.gradient[1]})`;
+                        const div = document.createElement('div');
+                        div.className = 'route-card';
+                        div.innerHTML = `
+                            <div class="card-img" style="background: ${gradient}">Фото</div>
+                            <div class="card-body">
+                                <h3 class="card-title">${route.title}</h3>
+                                <a href="route.html?id=${route.id}">Подробнее</a>
+                                <button class="btn-fav active" onclick="removeFav(${route.id}, this)" style="margin-top:10px; color:red">Удалить</button>
+                            </div>
+                        `;
+                        container.appendChild(div);
+                    });
+                });
+        });
+
+        function removeFav(id, btn) {
+            toggleFavorite(id);
+            btn.closest('.route-card').remove();
+            updateFavCounter();
+            if(getFavorites().length === 0) location.reload();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель | VIBE TRAVEL 03</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/css/main.css">
+    <link rel="stylesheet" href="src/css/components.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container header__inner">
+            <a href="index.html" class="logo">ADMIN PANEL</a>
+        </div>
+    </header>
+
+    <main class="container" style="padding-top: 100px;">
+        <form id="routeForm" class="admin-form">
+            <h2>Конструктор маршрута</h2>
+            <div class="form-group">
+                <label>ID</label>
+                <input type="number" id="r_id" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Название</label>
+                <input type="text" id="r_title" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Вайбы (через запятую)</label>
+                <input type="text" id="r_vibes" class="form-control" placeholder="#цифровой_детокс, #место_силы" required>
+            </div>
+            <div class="form-group" style="display:flex; gap:10px;">
+                <div style="flex:1">
+                    <label>Цвет 1</label>
+                    <input type="color" id="r_g1" class="form-control" value="#2E8B57">
+                </div>
+                <div style="flex:1">
+                    <label>Цвет 2</label>
+                    <input type="color" id="r_g2" class="form-control" value="#0077BE">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Длительность</label>
+                <input type="text" id="r_dur" class="form-control" placeholder="3 дня">
+            </div>
+            <div class="form-group">
+                <label>Бюджет</label>
+                <input type="text" id="r_bud" class="form-control" placeholder="от 5000 ₽">
+            </div>
+            <button type="submit" class="btn-pdf">Сгенерировать JSON</button>
+        </form>
+
+        <div class="container" style="max-width:800px; margin-bottom:4rem;">
+            <label>Результат (скопируйте и вставьте в routes.json):</label>
+            <textarea id="jsonOutput" class="form-control" rows="10"></textarea>
+            <button onclick="copyJson()" class="btn-pdf" style="margin-top:10px;">Копировать</button>
+        </div>
+    </main>
+
+    <script src="src/js/admin.js"></script>
+</body>
+</html>
