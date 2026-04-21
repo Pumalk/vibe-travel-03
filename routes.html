@@ -22,7 +22,7 @@
     </header>
 
     <main class="container" style="padding-top: 100px;">
-        <button class="filter-toggle" onclick="toggleFilters()">⚙️ Фильтры и сортировка</button>
+        <button class="filter-toggle" onclick="toggleFilters()">⚙️ Настроить выдачу</button>
         <div class="overlay" onclick="toggleFilters()"></div>
         
         <div class="filters-panel">
@@ -40,7 +40,7 @@
             
             <div class="filter-row">
                 <div class="filter-group">
-                    <label>Длительность</label>
+                    <label>Сколько дней</label>
                     <select name="duration" class="form-control filter-option" style="width: auto;">
                         <option value="">Любая</option>
                         <option value="short">1-2 дня</option>
@@ -50,7 +50,17 @@
                 </div>
 
                 <div class="filter-group">
-                    <label>Сезон</label>
+                    <label>Бюджет</label>
+                    <select name="budget" class="form-control filter-option" style="width: auto;">
+                        <option value="">Любой</option>
+                        <option value="low">До 4000 ₽</option>
+                        <option value="mid">4000-9000 ₽</option>
+                        <option value="high">От 9000 ₽</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Когда едем</label>
                     <select name="season" class="form-control filter-option" style="width: auto;">
                         <option value="">Любой</option>
                         <option value="лето">Лето</option>
@@ -60,7 +70,7 @@
                 </div>
 
                 <div class="filter-group">
-                    <label>Сортировка</label>
+                    <label>Сначала показать</label>
                     <select id="sortSelect" class="form-control" style="width: auto;">
                         <option value="default">По умолчанию</option>
                         <option value="duration_asc">Сначала короткие</option>

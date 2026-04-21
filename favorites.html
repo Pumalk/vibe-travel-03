@@ -29,8 +29,8 @@
     </header>
 
     <main class="container" style="padding-top: 100px;">
-        <h1 class="section-title">Моё избранное ❤️</h1>
-        <p style="text-align: center; color: #666; margin-bottom: 2rem;">Сохранённые маршруты для будущих путешествий</p>
+        <h1 class="section-title">Твоя коллекция вайбов ❤️</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 2rem;">Сохраняй идеи и возвращайся к ним, когда захочется рвануть.</p>
         <div id="favContainer" class="routes-grid"></div>
     </main>
 
@@ -54,9 +54,9 @@
             if(favIds.length === 0) {
                 container.innerHTML = `
                     <div class="favorites-empty" style="grid-column: 1/-1;">
-                        <h2>Пока ничего не сохранено</h2>
-                        <p>Добавь маршруты в избранное, чтобы не потерять их</p>
-                        <a href="routes.html" class="btn-pdf">Перейти в каталог</a>
+                        <h2>Избранное пока пустое</h2>
+                        <p>Открой каталог и добавь маршруты, которые зацепили.</p>
+                        <a href="routes.html" class="btn-pdf">Поймать вайб в каталоге</a>
                     </div>
                 `;
                 return;
@@ -77,17 +77,17 @@
                                 <img src="${imgSrc}" alt="${route.title}" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;">
                             </div>
                             <div class="card-body">
-                                <h3 class="card-title">${route.title}</h3>
+                                <h3 class="card-title">${escapeHTML(route.title)}</h3>
                                 <div class="card-tags">
-                                    ${route.vibes.slice(0, 4).map(v => `<span class="tag">${v}</span>`).join('')}
+                                    ${route.vibes.slice(0, 4).map(v => `<span class="tag">${escapeHTML(v)}</span>`).join('')}
                                 </div>
                                 <div class="card-meta">
                                     <span>⏱ ${route.duration}</span>
                                     <span>💰 ${route.budget}</span>
                                 </div>
                                 <div style="display: flex; gap: 10px; margin-top: 1rem;">
-                                    <a href="route.html?id=${route.id}" class="btn-pdf" style="flex: 1; text-align: center; padding: 0.6rem;">Подробнее</a>
-                                    <button class="btn-fav active" onclick="removeFav(${route.id}, this)" style="font-size: 1.2rem;">🗑️</button>
+                                    <a href="route.html?id=${route.id}" class="btn-pdf" style="flex: 1; text-align: center; padding: 0.6rem;">Открыть маршрут</a>
+                                    <button class="btn-fav active" onclick="removeFav(${route.id}, this)" style="font-size: 1.2rem;" aria-label="Удалить из избранного">🗑️</button>
                                 </div>
                             </div>
                         `;

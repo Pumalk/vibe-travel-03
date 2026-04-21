@@ -29,25 +29,28 @@
 
     <main class="container" style="padding-top: 100px;">
         <section class="events-section">
-            <h1 class="section-title">Афиша 2026</h1>
-            <p style="text-align: center; color: #666; margin-bottom: 2rem;">Культурные события и фестивали Бурятии</p>
+            <h1 class="section-title">События, ради которых стоит приехать</h1>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem;">Живой календарь Бурятии: музыка, спорт, культура и атмосфера.</p>
             <div id="eventsContainer" class="events-list">
                 <!-- Events loaded by JS -->
             </div>
         </section>
 
         <section class="video-section">
-            <h2 class="section-title">Видео-вайб</h2>
-            <p style="text-align: center; color: #666; margin-bottom: 2rem;">Почувствуй атмосферу Бурятии</p>
+            <h2 class="section-title">Атмосфера места</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem;">Без видео-шумов: только визуал, который хочется прожить вживую.</p>
             <div class="video-grid">
-                <div class="video-wrapper wave-effect">
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0" frameborder="0" allowfullscreen></iframe>
+                <div class="video-wrapper wave-effect" style="padding:0;height:260px;background:linear-gradient(135deg,#2E8B57,#0077BE);display:flex;align-items:flex-end;">
+                    <img src="assets/images/baikal.jpg" alt="Байкал" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85;">
+                    <p style="position:relative;color:white;padding:1rem 1.2rem;font-weight:700;">Утренний Байкал и тишина без уведомлений</p>
                 </div>
-                <div class="video-wrapper wave-effect">
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0" frameborder="0" allowfullscreen></iframe>
+                <div class="video-wrapper wave-effect" style="padding:0;height:260px;background:linear-gradient(135deg,#FFD700,#FF8C00);display:flex;align-items:flex-end;">
+                    <img src="assets/images/baikal.jpg" alt="Фестиваль" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.8;">
+                    <p style="position:relative;color:white;padding:1rem 1.2rem;font-weight:700;">Фестиваль, огни, музыка и новый круг друзей</p>
                 </div>
-                <div class="video-wrapper wave-effect">
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0" frameborder="0" allowfullscreen></iframe>
+                <div class="video-wrapper wave-effect" style="padding:0;height:260px;background:linear-gradient(135deg,#4B0082,#9400D3);display:flex;align-items:flex-end;">
+                    <img src="assets/images/baikal.jpg" alt="Горы Бурятии" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.8;">
+                    <p style="position:relative;color:white;padding:1rem 1.2rem;font-weight:700;">Туман в горах и вайб полного перезапуска</p>
                 </div>
             </div>
         </section>
@@ -71,16 +74,13 @@
             .then(events => {
                 const container = document.getElementById('eventsContainer');
                 events.forEach(ev => {
-                    const dateParts = ev.date.split(' ');
                     const div = document.createElement('div');
                     div.className = 'event-card fade-in';
                     div.innerHTML = `
-                        <div class="event-date">
-                            <div class="month">${dateParts[0]}</div>
-                            <div class="day">${dateParts[1]}</div>
-                        </div>
+                        <img src="${ev.image || 'assets/images/baikal.jpg'}" alt="${ev.title}" loading="lazy" style="width:140px;height:110px;object-fit:cover;border-radius:12px;">
                         <div class="event-info">
                             <h3>${ev.title}</h3>
+                            <p><strong>📅 ${ev.date}</strong></p>
                             <p>📍 ${ev.location}</p>
                             <p>${ev.description}</p>
                         </div>

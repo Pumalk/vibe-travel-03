@@ -43,9 +43,18 @@
         <p>Кликните на метку для подробностей</p>
     </div>
 
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=${CONFIG.YANDEX_MAP_KEY}&lang=ru_RU"></script>
     <script>
-        ymaps.ready(init);
+        function loadYMaps() {
+            return new Promise((resolve, reject) => {
+                if (window.ymaps) return resolve();
+                const script = document.createElement('script');
+                script.src = `https://api-maps.yandex.ru/2.1/?apikey=${CONFIG.YANDEX_MAP_KEY}&lang=ru_RU`;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+        loadYMaps().then(() => ymaps.ready(init));
 
         function init() {
             const myMap = new ymaps.Map("fullMap", {

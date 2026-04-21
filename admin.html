@@ -20,7 +20,7 @@
 <body>
     <header class="header">
         <div class="container header__inner">
-            <a href="index.html" class="logo">⚙️ ADMIN PANEL</a>
+            <a href="index.html" class="logo">⚙️ VIBE ADMIN</a>
             <a href="index.html" class="btn-pdf" style="padding: 0.5rem 1rem; font-size: 0.9rem;">На главную</a>
         </div>
     </header>
@@ -28,7 +28,7 @@
     <main class="container" style="padding-top: 100px;">
         <form id="routeForm" class="admin-form">
             <h2>🛠 Конструктор маршрута</h2>
-            <p style="color: #666; margin-bottom: 1.5rem;">Создайте новый маршрут и добавьте его в базу</p>
+            <p style="color: #666; margin-bottom: 1.5rem;">Заполните поля и получите готовый объект для `routes.json`.</p>
             
             <div class="form-group">
                 <label>ID</label>
@@ -77,6 +77,10 @@
             <div class="form-group">
                 <label>Полное описание</label>
                 <textarea id="r_fullDesc" class="form-control" rows="3" placeholder="Погружение в атмосферу байкальской тайги..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Путь к изображению (опционально)</label>
+                <input type="text" id="r_image" class="form-control" placeholder="assets/images/placeholders/route13_1.jpg">
             </div>
             <button type="submit" class="btn-admin">✨ Сгенерировать JSON</button>
         </form>

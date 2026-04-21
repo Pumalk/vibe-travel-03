@@ -37,8 +37,8 @@
         <div class="hero__bg"></div>
         <div class="hero__content container fade-in">
             <h1>БУРЯТИЯ.<br>НАЙДИ СВОЙ ВАЙБ</h1>
-            <p class="hero__subtitle">Цифровой гид по эмоциям и приключениям</p>
-            <a href="routes.html" class="btn-pdf" style="background: white; color: var(--color-baikal);">Выбрать маршрут</a>
+            <p class="hero__subtitle">Не просто поездка, а состояние: выбери настроение и забери маршрут под себя.</p>
+            <a href="routes.html" class="btn-pdf" style="background: white; color: var(--color-baikal);">Поймать свой вайб</a>
         </div>
     </section>
 
@@ -75,7 +75,7 @@
 
     <!-- Top Routes Preview -->
     <section class="container" style="padding: 4rem 0;">
-        <h2 class="section-title">Популярное сейчас</h2>
+        <h2 class="section-title">Куда рванем прямо сейчас</h2>
         <div id="topRoutes" class="routes-grid">
             <!-- Injected via JS -->
         </div>
@@ -83,7 +83,7 @@
 
     <!-- Mini Map -->
     <section class="container" style="padding-bottom: 4rem;">
-        <h2 class="section-title">Живая карта</h2>
+        <h2 class="section-title">Живая карта эмоций</h2>
         <div id="miniMap" class="map-preview" style="height: 400px; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
             <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(135deg, var(--color-bg), #e8e3d9);">
                 <p style="color: var(--color-text); opacity: 0.6;">Загрузка карты...</p>
@@ -103,18 +103,6 @@
         </div>
     </footer>
 
-    <!-- Easter Egg Modal -->
-    <div id="ornamentModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h3>Сила предков</h3>
-            <svg class="ornament-anim" viewBox="0 0 100 100">
-                <path d="M50 0 L60 40 L100 50 L60 60 L50 100 L40 60 L0 50 L40 40 Z" fill="#FFD700"/>
-            </svg>
-        </div>
-    </div>
-
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=${CONFIG.YANDEX_MAP_KEY}&lang=ru_RU"></script>
     <script src="src/js/main.js"></script>
     <script>
         function selectVibe(vibe) {
@@ -145,7 +133,7 @@
                                 <span>⏱ ${route.duration}</span>
                                 <span>💰 ${route.budget}</span>
                             </div>
-                            <a href="route.html?id=${route.id}" class="btn-pdf" style="margin-top: 1rem; padding: 0.6rem 1.5rem; font-size: 0.9rem;">Подробнее →</a>
+                            <a href="route.html?id=${route.id}" class="btn-pdf" style="margin-top: 1rem; padding: 0.6rem 1.5rem; font-size: 0.9rem;">Забрать маршрут</a>
                         </div>
                     `;
                     container.appendChild(div);
@@ -159,11 +147,23 @@
                 }, 100);
             });
 
-        // Init Mini Map (Lazy)
+        function loadYMaps() {
+            if (window.ymaps) return Promise.resolve();
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = `https://api-maps.yandex.ru/2.1/?apikey=${CONFIG.YANDEX_MAP_KEY}&lang=ru_RU`;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+
         const mapObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if(entry.isIntersecting && !window.mapInitialized) {
-                    initMiniMap();
+                    loadYMaps().then(initMiniMap).catch(() => {
+                        document.getElementById('miniMap').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;background:#f5f5f5;color:#666;">Не удалось загрузить Яндекс.Карту</div>';
+                    });
                     window.mapInitialized = true;
                 }
             });

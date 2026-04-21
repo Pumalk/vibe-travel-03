@@ -25,8 +25,18 @@
 
     <script src="src/js/main.js"></script>
     <script src="src/js/pdfGenerator.js"></script>
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=${CONFIG.YANDEX_MAP_KEY}&lang=ru_RU"></script>
     <script>
+        function loadYMaps() {
+            if (window.ymaps) return Promise.resolve();
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = `https://api-maps.yandex.ru/2.1/?apikey=${CONFIG.YANDEX_MAP_KEY}&lang=ru_RU`;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
 
@@ -49,47 +59,56 @@
             const gradient = `linear-gradient(135deg, ${route.gradient[0]}, ${route.gradient[1]})`;
             const container = document.getElementById('routeDetail');
             const isFav = getFavorites().includes(route.id);
+            const gallery = (route.images && route.images.length ? route.images : [{ src: 'assets/images/baikal.jpg', alt: route.title }]).slice(0, 4);
             
             const scheduleHtml = route.schedule.map(s => `
                 <div class="schedule-item">
-                    <h4>День ${s.day}: ${s.title}</h4>
-                    <p>${s.description}</p>
+                    <h4>День ${escapeHTML(String(s.day))}: ${escapeHTML(s.title)}</h4>
+                    <p>${escapeHTML(s.description)}</p>
                 </div>
             `).join('');
 
             container.innerHTML = `
                 <div class="detail-header" style="background: ${gradient}">
-                    <h1>${route.title}</h1>
+                    <h1>${escapeHTML(route.title)}</h1>
                 </div>
                 <div class="container detail-content">
                     <div>
                         <div class="info-block">
-                            <h2>О вайбе</h2>
-                            <p>${route.fullDescription}</p>
-                            <div class="card-tags" style="margin-top:1rem">
-                                ${route.vibes.map(v => `<span class="tag">${v}</span>`).join('')}
+                            <h2>Галерея настроения</h2>
+                            <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;">
+                                ${gallery.map((img) => `
+                                    <img src="${img.src || 'assets/images/baikal.jpg'}" alt="${escapeHTML(img.alt || route.title)}" loading="lazy" style="width:100%;height:160px;object-fit:cover;border-radius:12px;">
+                                `).join('')}
                             </div>
                         </div>
                         <div class="info-block">
-                            <h2>Программа</h2>
+                            <h2>О вайбе</h2>
+                            <p>${escapeHTML(route.fullDescription)}</p>
+                            <div class="card-tags" style="margin-top:1rem">
+                                ${route.vibes.map(v => `<span class="tag">${escapeHTML(v)}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="info-block">
+                            <h2>Маршрут по дням</h2>
                             ${scheduleHtml}
                         </div>
                         <div class="info-block">
                             <h2>Логистика</h2>
-                            <p><strong>🚗 Как добраться:</strong> ${route.logistics.howToGet}</p>
-                            <p><strong>💰 Бюджет:</strong> ${route.logistics.budgetDetails}</p>
-                            <p><strong>📅 Сезон:</strong> ${route.logistics.seasonality}</p>
-                            <button class="btn-pdf" onclick="generatePDF(${route.id})">📄 Скачать PDF-гид</button>
+                            <p><strong>🚗 Как добраться:</strong> ${escapeHTML(route.logistics.howToGet)}</p>
+                            <p><strong>💰 Детали бюджета:</strong> ${escapeHTML(route.logistics.budgetDetails)}</p>
+                            <p><strong>📅 Сезонность:</strong> ${escapeHTML(route.logistics.seasonality)}</p>
+                            <button class="btn-pdf" onclick="generatePDF(${route.id})">📄 Скачать offline-гид</button>
                         </div>
                     </div>
                     <div>
                         <div class="info-block">
-                            <h3>Информация</h3>
+                            <h3>Коротко о трипе</h3>
                             <p style="display: flex; align-items: center; gap: 8px;">⏱ <strong>Длительность:</strong> ${route.duration}</p>
                             <p style="display: flex; align-items: center; gap: 8px;">💰 <strong>Бюджет:</strong> ${route.budget}</p>
                             <p style="display: flex; align-items: center; gap: 8px;">📆 <strong>Сезон:</strong> ${route.season}</p>
                             <button class="btn-fav-detail ${isFav ? 'active' : ''}" data-id="${route.id}">
-                                ${isFav ? '❤️ В избранном' : '🤍 Добавить в избранное'}
+                                ${isFav ? '❤️ Уже в избранном' : '🤍 Сохранить в избранное'}
                             </button>
                         </div>
                         <div id="map" class="map-container"></div>
@@ -97,7 +116,7 @@
                 </div>
             `;
 
-            initMap(route);
+            loadYMaps().then(() => initMap(route));
             initFavorites();
         }
 
