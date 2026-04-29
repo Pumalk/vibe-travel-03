@@ -1,12 +1,10 @@
 #файлы
-plan.md
-image.png
-repomix-output.md
 secrets.js
+skills-lock.json
 
 #папки
-info
-prompts
+temp
+.agents
 
 #база
 .env
