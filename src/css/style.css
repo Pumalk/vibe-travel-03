@@ -333,3 +333,141 @@ body {
     padding: 2rem 1rem;
   }
 }
+
+/* ========== ФИЛЬТРЫ ========== */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+/* Чипсы тегов */
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.chip {
+  padding: 0.4rem 1rem;
+  border: 2px solid var(--color-primary);
+  border-radius: 30px;
+  background: transparent;
+  color: var(--color-primary);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all var(--transition);
+  font-size: 0.9rem;
+}
+.chip:hover,
+.chip.active {
+  background: var(--color-primary);
+  color: white;
+}
+
+/* Селекты */
+.filter-select {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  background: white;
+}
+
+/* ========== ДЕТАЛЬНАЯ СТРАНИЦА: ГАЛЕРЕЯ ========== */
+.gallery-container {
+  margin: 1.5rem 0;
+}
+/* На мобильных – горизонтальный скролл */
+.gallery-scroll {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+.gallery-scroll .gallery-image {
+  height: 250px;
+  border-radius: 8px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s;
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+.gallery-scroll .gallery-image:hover {
+  transform: scale(1.02);
+}
+
+/* На десктопе – сетка */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 0.5rem;
+}
+.gallery-grid .gallery-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.gallery-grid .gallery-image:hover {
+  transform: scale(1.02);
+}
+
+/* Лайтбокс */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox.active {
+  display: flex;
+}
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+}
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+/* ========== АДАПТИВ: ПЕРЕКЛЮЧЕНИЕ ГАЛЕРЕИ ========== */
+.gallery-desktop {
+  display: none;
+}
+.gallery-mobile {
+  display: block;
+}
+@media (min-width: 769px) {
+  .gallery-desktop {
+    display: block;
+  }
+  .gallery-mobile {
+    display: none;
+  }
+}
+
+/* Кнопки в детальной странице */
+.detail-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
