@@ -179,7 +179,6 @@ function renderRouteDetail(id) {
         <button class="btn" onclick="alert('Скачивание PDF будет позже')">📥 Скачать PDF</button>
         <button class="btn" id="share-btn">🔗 Поделиться</button>
         <button class="btn" id="build-route-yandex">🚗 Открыть в Яндекс.Картах</button>
-        <button class="btn" id="build-route-2gis">🚕 Открыть в 2ГИС</button>
       </div>
 
       <!-- Карта -->
@@ -213,9 +212,6 @@ function renderRouteDetail(id) {
     document.getElementById('build-route-yandex').addEventListener('click', () => {
         window.open(buildRouteLink(route, 'yandex'), '_blank');
     });
-    document.getElementById('build-route-2gis').addEventListener('click', () => {
-        window.open(buildRouteLink(route, '2gis'), '_blank');
-    });
 }
 
 function renderMapPage() {
@@ -235,7 +231,8 @@ function renderEvents() {
       <h2>📅 Ближайшие события</h2>
       <div class="cards-grid">
         ${appData.events.map(e => `
-          <div class="card">
+          <div class="card event-card">
+            <img src="assets/events/${e.photo}" alt="${e.name}" class="event-photo" onerror="this.style.display='none'">
             <div class="card-content">
               <h3>${e.name}</h3>
               <p><strong>${e.date}</strong></p>

@@ -220,24 +220,9 @@ function initFullMap() {
  * @returns {string} url
  */
 function buildRouteLink(route, service) {
-    // Координаты всех точек
-    const coords = route.points.map(p => p.coords.join(',')).join('~');
-
     if (service === 'yandex') {
-        // Яндекс.Карты: маршрут через точку
+        const coords = route.points.map(p => p.coords.join(',')).join('~');
         return `https://yandex.ru/maps/?rtext=${coords}&rtt=auto`;
-    } else if (service === '2gis') {
-        // 2ГИС принимает координаты для построения маршрута
-        // Формат: https://2gis.ru/routeSearch/rsType/car/to/<lon>,<lat>|... но проще передать все точки
-        // Используем параметры from/to для двух точек; для множества точек у 2ГИС нет прямого URL.
-        // Поэтому передадим начальную и конечную, остальные пользователь добавит сам.
-        if (route.points.length >= 2) {
-            const from = route.points[0].coords.join(',');
-            const to = route.points[route.points.length - 1].coords.join(',');
-            return `https://2gis.ru/routeSearch/rsType/car/to/${to}/from/${from}`;
-        } else {
-            return '#';
-        }
     }
     return '#';
 }
