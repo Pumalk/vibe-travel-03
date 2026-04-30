@@ -1,13 +1,5 @@
-#файлы
-secrets.js
-skills-lock.json
-
 #папки
 temp
-.agents
 
-#база
+#файлы
 .env
-*.log
-*.tmp
-*.temp
