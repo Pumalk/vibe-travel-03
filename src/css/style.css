@@ -1,24 +1,31 @@
-/* === Переменные === */
+/* === ПЕРЕМЕННЫЕ === */
 :root {
   --font-heading: "Montserrat", sans-serif;
   --font-text: "Inter", sans-serif;
+
+  /* Основные цвета */
   --color-bg: #f8f9fa;
   --color-text: #212529;
   --color-primary: #e07a5f;
   --color-secondary: #3a7ca5;
-  --color-gradient-sunset: linear-gradient(135deg, #ff6b35, #f7c948);
-  --color-gradient-forest: linear-gradient(135deg, #2d6a4f, #52b788);
-  --color-gradient-sacred: linear-gradient(135deg, #5f0f40, #9b2226);
-  --color-gradient-sky: linear-gradient(135deg, #0077b6, #00b4d8);
-  --color-gradient-warm: linear-gradient(135deg, #e07a5f, #f2cc8f);
-  --color-gradient-ethno: linear-gradient(135deg, #9c89b8, #f0a6ca);
-  --color-gradient-wild: linear-gradient(135deg, #0b525b, #3a7ca5);
-  --color-gradient-urban: linear-gradient(135deg, #6c757d, #adb5bd);
+
+  /* Градиенты для тегов */
+  --gradient-sunset: linear-gradient(135deg, #ff6b35, #f7c948);
+  --gradient-forest: linear-gradient(135deg, #2d6a4f, #52b788);
+  --gradient-sacred: linear-gradient(135deg, #5f0f40, #9b2226);
+  --gradient-sky: linear-gradient(135deg, #0077b6, #00b4d8);
+  --gradient-warm: linear-gradient(135deg, #e07a5f, #f2cc8f);
+  --gradient-ethno: linear-gradient(135deg, #9c89b8, #f0a6ca);
+  --gradient-wild: linear-gradient(135deg, #0b525b, #3a7ca5);
+  --gradient-urban: linear-gradient(135deg, #6c757d, #adb5bd);
+
+  /* Прочее */
   --transition: 0.25s ease-in-out;
   --max-width: 1200px;
+  --border-radius: 12px;
 }
 
-/* === Сброс === */
+/* === СБРОС === */
 *,
 *::before,
 *::after {
@@ -39,10 +46,9 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  /* Фоновый орнамент будет добавлен позже */
 }
 
-/* === Прелоадер === */
+/* === ПРЕЛОАДЕР === */
 #preloader {
   position: fixed;
   inset: 0;
@@ -56,12 +62,10 @@ body {
     opacity 0.5s ease,
     visibility 0.5s ease;
 }
-
 #preloader.hidden {
   opacity: 0;
   visibility: hidden;
 }
-
 .preloader-circle {
   width: 40px;
   height: 40px;
@@ -71,20 +75,18 @@ body {
   animation: spin 0.8s linear infinite;
   margin-bottom: 1rem;
 }
-
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
-
 #preloader p {
   font-family: var(--font-heading);
   font-weight: bold;
   color: var(--color-primary);
 }
 
-/* === Шапка === */
+/* === ШАПКА === */
 .header {
   background: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -92,13 +94,11 @@ body {
   top: 0;
   z-index: 100;
 }
-
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 1rem;
 }
-
 .header .container {
   display: flex;
   justify-content: space-between;
@@ -106,6 +106,7 @@ body {
   height: 60px;
 }
 
+/* Логотип */
 .logo {
   font-family: var(--font-heading);
   font-size: 1.5rem;
@@ -113,9 +114,25 @@ body {
   color: var(--color-primary);
   text-decoration: none;
 }
-
 .logo span {
   color: var(--color-secondary);
+}
+
+/* Навигация */
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+.nav-link {
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: 500;
+  transition: color var(--transition);
+}
+.nav-link:hover,
+.nav-link.active {
+  color: var(--color-primary);
 }
 
 /* Бургер */
@@ -128,7 +145,6 @@ body {
   cursor: pointer;
   padding: 5px;
 }
-
 .burger span {
   display: block;
   width: 25px;
@@ -137,25 +153,7 @@ body {
   transition: var(--transition);
 }
 
-.nav-list {
-  list-style: none;
-  display: flex;
-  gap: 1.5rem;
-}
-
-.nav-link {
-  text-decoration: none;
-  color: var(--color-text);
-  font-weight: 500;
-  transition: color var(--transition);
-}
-
-.nav-link:hover,
-.nav-link.active {
-  color: var(--color-primary);
-}
-
-/* === Подвал === */
+/* === ПОДВАЛ === */
 .footer {
   background: white;
   text-align: center;
@@ -166,12 +164,150 @@ body {
   border-top: 1px solid #eee;
 }
 
-/* === Адаптивность (черновой вариант) === */
+/* === HERO-СЕКЦИЯ (Главная) === */
+.hero {
+  position: relative;
+  height: 70vh;
+  min-height: 400px;
+  background: url("../assets/images/baikal.jpg") center/cover no-repeat;
+  background-attachment: fixed; /* Параллакс */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  overflow: hidden;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35); /* Затемнение для читаемости текста */
+}
+.hero-content {
+  position: relative;
+  text-align: center;
+  z-index: 1;
+  padding: 1rem;
+}
+.hero-content h1 {
+  font-family: var(--font-heading);
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+.hero-content p {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* === ОБЩИЕ СЕКЦИИ === */
+.section {
+  padding: 3rem 1rem;
+}
+.section h2 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--color-secondary);
+}
+
+/* === СЕТКА КАРТОЧЕК === */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* === КАРТОЧКА МАРШРУТА / СОБЫТИЯ === */
+.card {
+  border-radius: var(--border-radius);
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+/* Карточка с градиентом (для маршрутов) */
+.card[style*="background-image"] {
+  color: white;
+  background-size: cover;
+  background-position: center;
+}
+
+.card-content {
+  padding: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+.card p {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+}
+
+/* Кнопка */
+.btn {
+  display: inline-block;
+  background: white;
+  color: var(--color-primary);
+  padding: 0.5rem 1.2rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition:
+    background var(--transition),
+    color var(--transition);
+  align-self: flex-start;
+}
+.btn:hover {
+  background: var(--color-primary);
+  color: white;
+}
+
+/* Вариант кнопки для градиентных карточек */
+.card[style*="background-image"] .btn {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.card[style*="background-image"] .btn:hover {
+  background: white;
+  color: var(--color-primary);
+}
+
+/* === АДАПТИВНОСТЬ (Mobile First) === */
 @media (max-width: 768px) {
+  .hero {
+    height: 50vh;
+    background-attachment: scroll; /* На мобильных параллакс может не работать или тормозить, убираем */
+  }
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  /* Бургер-меню */
   .burger {
     display: flex;
   }
-
   .nav-list {
     position: fixed;
     inset: 0 0 0 0;
@@ -184,13 +320,16 @@ body {
     transition: transform 0.3s ease;
     z-index: 99;
   }
-
   .nav-list.active {
     transform: translateX(0);
   }
 }
 
-/* Утилиты */
-.container {
-  width: 100%;
+@media (max-width: 480px) {
+  .cards-grid {
+    grid-template-columns: 1fr; /* Одна колонка на маленьких экранах */
+  }
+  .section {
+    padding: 2rem 1rem;
+  }
 }

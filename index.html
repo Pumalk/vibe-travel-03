@@ -6,31 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIBE TRAVEL 03 — твой гид по Бурятии</title>
     <meta name="description" content="Эмоциональный гид по Бурятии для молодёжи. Вайб-фильтры, маршруты, события.">
+
+    <!-- Preconnect для Google Fonts (ускоряет загрузку шрифтов) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Подключаем шрифты Montserrat и Inter -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Favicon (юрта) -->
     <link rel="icon"
-        href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='none' stroke='%23E07A5F' stroke-width='4'/><line x1='50' y1='2' x2='50' y2='98' stroke='%23E07A5F' stroke-width='4'/><line x1='2' y1='50' x2='98' y2='50' stroke='%23E07A5F' stroke-width='4'/><circle cx='50' cy='50' r='10' fill='%23E07A5F'/></svg>"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='none' stroke='%23E07A5F' stroke-width='4'/><line x1='50' y1='2' x2='50' y2='98' stroke='%23E07A5F' stroke-width='4'/><line x1='2' y1='50' x2='98' y2='50' stroke='%23E07A5F' stroke-width='4'/><circle cx='50' cy='50' r='10' fill='%23E07A5F'/></svg>"
         type="image/svg+xml">
-    <link rel="preload" href="src/css/style.css" as="style">
+
+    <!-- Стили -->
     <link rel="stylesheet" href="src/css/style.css">
 </head>
 
 <body>
-    <!-- Прелоадер -->
+    <!-- Прелоадер (будет скрыт после загрузки данных) -->
     <div id="preloader">
         <div class="preloader-circle"></div>
         <p>Загружаем вайб...</p>
     </div>
 
-    <!-- Основной контейнер SPA -->
+    <!-- Основной контейнер приложения -->
     <div id="app">
         <header class="header">
             <div class="container">
+                <!-- Логотип (ссылка на главную) -->
                 <a href="#/" class="logo">VIBE TRAVEL <span>03</span></a>
+
+                <!-- Навигация -->
                 <nav class="nav" id="mainNav">
+                    <!-- Бургер-иконка для мобильных -->
                     <button class="burger" id="burgerBtn" aria-label="Меню">
                         <span></span>
                         <span></span>
                         <span></span>
                     </button>
+                    <!-- Список ссылок -->
                     <ul class="nav-list" id="navList">
                         <li><a href="#/routes" class="nav-link">Маршруты</a></li>
                         <li><a href="#/map" class="nav-link">Карта</a></li>
@@ -40,10 +56,10 @@
             </div>
         </header>
 
-        <main id="main-content" class="main">
-            <!-- Контент будет подгружен через JS -->
-        </main>
+        <!-- Сюда будет вставляться содержимое страниц -->
+        <main id="main-content" class="main"></main>
 
+        <!-- Подвал -->
         <footer class="footer">
             <div class="container">
                 <p>&copy; 2026 VIBE TRAVEL 03. Все права защищены (но это не точно).</p>
@@ -52,10 +68,7 @@
         </footer>
     </div>
 
-    <script src="data/routes.json?inline" type="application/json" id="routesData" async></script>
-    <script src="data/events.json?inline" type="application/json" id="eventsData" async></script>
-    <!-- В реальности JSON загружаются через fetch, но для локальной работы можно встроить. -->
-    <!-- Мы будем загружать через асинхронные запросы в app.js -->
+    <!-- Скрипты -->
     <script src="src/js/router.js"></script>
     <script src="src/js/app.js"></script>
 </body>
