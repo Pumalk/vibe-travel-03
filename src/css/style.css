@@ -480,3 +480,20 @@ body {
   background: #f0f0f0; /* нейтральный фон, если фото меньше */
   border-radius: 8px 8px 0 0;
 }
+
+/* Кнопка избранного */
+#fav-btn {
+  transition: transform 0.2s;
+}
+#fav-btn:active {
+  transform: scale(1.1);
+}
+
+/* Сообщение "ничего не найдено" */
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #6c757d;
+  padding: 2rem;
+  font-size: 1.1rem;
+}

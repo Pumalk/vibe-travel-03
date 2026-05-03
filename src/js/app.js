@@ -52,6 +52,7 @@ function renderHome() {
 
     // После вставки HTML инициализируем карту
     initPreviewMap();
+    observeLazyImages();
 }
 
 function renderRoutes() {
@@ -97,6 +98,7 @@ function renderRoutes() {
     // Привязываем фильтры
     setupFilters();
     updateRoutesGrid();
+    observeLazyImages();
 }
 
 /**
@@ -135,7 +137,12 @@ function updateRoutesGrid() {
 
     const grid = document.getElementById('routes-grid');
     if (grid) {
-        grid.innerHTML = filtered.map(r => renderRouteCard(r)).join('');
+        grid.innerHTML = '';
+        if (filtered.length === 0) {
+            grid.innerHTML = '<p class="no-results">😔 Ничего не найдено. Попробуйте изменить фильтры.</p>';
+        } else {
+            grid.innerHTML = filtered.map(r => renderRouteCard(r)).join('');
+        }
     }
 }
 
@@ -161,10 +168,10 @@ function renderRouteDetail(id) {
       <!-- Галерея -->
       <div class="gallery-container">
         <div class="gallery-mobile gallery-scroll">
-          ${route.photos.map(p => `<img src="assets/images/${p}" alt="Фото маршрута" class="gallery-image" onerror="this.src='https://via.placeholder.com/400x250?text=Фото'">`).join('')}
+          ${route.photos.map(p => `<img data-src="assets/images/${p}" alt="Фото маршрута" class="gallery-image lazy" onerror="this.src='https://via.placeholder.com/400x250?text=Фото'">`).join('')}
         </div>
         <div class="gallery-desktop gallery-grid">
-          ${route.photos.map(p => `<img src="assets/images/${p}" alt="Фото маршрута" class="gallery-image" onerror="this.src='https://via.placeholder.com/400x300?text=Фото'">`).join('')}
+          ${route.photos.map(p => `<img data-src="assets/images/${p}" alt="Фото маршрута" class="gallery-image lazy" onerror="this.src='https://via.placeholder.com/400x300?text=Фото'">`).join('')}
         </div>
       </div>
 
@@ -176,7 +183,8 @@ function renderRouteDetail(id) {
 
       <!-- Кнопки действий -->
       <div class="detail-actions">
-        <button class="btn" onclick="alert('Скачивание PDF будет позже')">📥 Скачать PDF</button>
+        <button class="btn" id="pdf-btn">📥 Скачать PDF</button>
+        <button class="btn" id="fav-btn">${isFavorite(route.id) ? '❤️ В избранном' : '🤍 В избранное'}</button>
         <button class="btn" id="share-btn">🔗 Поделиться</button>
         <button class="btn" id="build-route-yandex">🚗 Открыть в Яндекс.Картах</button>
       </div>
@@ -208,6 +216,21 @@ function renderRouteDetail(id) {
         }
     });
 
+    // Кнопка избранного
+    const favBtn = document.getElementById('fav-btn');
+    favBtn.addEventListener('click', function () {
+        if (isFavorite(route.id)) {
+            removeFavorite(route.id);
+            this.innerHTML = '🤍 В избранное';
+        } else {
+            addFavorite(route.id);
+            this.innerHTML = '❤️ В избранном';
+        }
+    });
+
+    // Кнопка скачать PDF
+    document.getElementById('pdf-btn').addEventListener('click', () => downloadPDF(route));
+
     // Кнопки построения маршрута
     document.getElementById('build-route-yandex').addEventListener('click', () => {
         window.open(buildRouteLink(route, 'yandex'), '_blank');
@@ -232,7 +255,7 @@ function renderEvents() {
       <div class="cards-grid">
         ${appData.events.map(e => `
           <div class="card event-card">
-            <img src="assets/events/${e.photo}" alt="${e.name}" class="event-photo" onerror="this.style.display='none'">
+            <img data-src="assets/events/${e.photo}" alt="${e.name}" class="event-photo lazy" onerror="this.style.display='none'">
             <div class="card-content">
               <h3>${e.name}</h3>
               <p><strong>${e.date}</strong></p>
@@ -244,6 +267,7 @@ function renderEvents() {
       </div>
     </section>
   `;
+  observeLazyImages();
 }
 
 // ---------- Вспомогательные функции ----------
@@ -287,6 +311,131 @@ function renderRouteCard(route) {
       </div>
     </div>
   `;
+}
+
+// Ленивая загрузка изображений – глобальный observer
+const lazyObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.classList.remove('lazy');
+            observer.unobserve(img);
+        }
+    });
+});
+
+function observeLazyImages() {
+    document.querySelectorAll('img.lazy').forEach(img => {
+        if (img.dataset.src && !img.src) {
+            lazyObserver.observe(img);
+        }
+    });
+}
+
+// ---------- ИЗБРАННОЕ (localStorage) ----------
+
+/**
+ * Получает массив id избранных маршрутов из localStorage.
+ * @returns {number[]}
+ */
+function getFavorites() {
+    const raw = localStorage.getItem('vibe_favorites');
+    return raw ? JSON.parse(raw) : [];
+}
+
+/**
+ * Добавляет id маршрута в избранное, если его там нет.
+ * @param {number} routeId
+ */
+function addFavorite(routeId) {
+    const favs = getFavorites();
+    if (!favs.includes(routeId)) {
+        favs.push(routeId);
+        localStorage.setItem('vibe_favorites', JSON.stringify(favs));
+    }
+}
+
+/**
+ * Удаляет id маршрута из избранного.
+ * @param {number} routeId
+ */
+function removeFavorite(routeId) {
+    let favs = getFavorites();
+    favs = favs.filter(id => id !== routeId);
+    localStorage.setItem('vibe_favorites', JSON.stringify(favs));
+}
+
+/**
+ * Проверяет, находится ли маршрут в избранном.
+ * @param {number} routeId
+ * @returns {boolean}
+ */
+function isFavorite(routeId) {
+    return getFavorites().includes(routeId);
+}
+
+/**
+ * Генерирует и скачивает PDF-гид для маршрута.
+ * Использует html2canvas для скриншота карты и jsPDF для сборки.
+ * @param {Object} route - объект маршрута
+ */
+async function downloadPDF(route) {
+    const pdfContent = document.createElement('div');
+    pdfContent.style.position = 'absolute';
+    pdfContent.style.left = '-9999px';
+    pdfContent.style.width = '800px';
+    pdfContent.style.padding = '20px';
+    pdfContent.style.fontFamily = 'Inter, sans-serif';
+    pdfContent.innerHTML = `
+      <h1 style="font-family:Montserrat;">${route.title}</h1>
+      <p><strong>Теги:</strong> ${route.tags.map(t => tagLabels[t] || t).join(', ')}</p>
+      <p><strong>Длительность:</strong> ${route.duration} | <strong>Бюджет:</strong> ${route.budget} | <strong>Сезон:</strong> ${route.season.join(', ')}</p>
+      <h2>Описание</h2>
+      <p>${route.description}</p>
+      <h2>Транспорт</h2>
+      <p>${route.transport}</p>
+      <h2>Советы</h2>
+      <p>${route.tips}</p>
+      <h2>Точки маршрута</h2>
+      <ul>
+        ${route.points.map(p => `<li><strong>${p.name}</strong> (${p.type}): ${p.description} — координаты: ${p.coords.join(', ')}</li>`).join('')}
+      </ul>
+      <div id="pdf-map-container" style="height:300px; margin: 20px 0;"></div>
+    `;
+    document.body.appendChild(pdfContent);
+
+    const mapContainer = document.getElementById('detail-map');
+    let mapImage = '';
+    if (mapContainer && typeof html2canvas !== 'undefined') {
+        try {
+            const canvas = await html2canvas(mapContainer, { useCORS: true, scale: 1.5 });
+            mapImage = canvas.toDataURL('image/png');
+        } catch (e) {
+            console.warn('Не удалось захватить карту для PDF', e);
+        }
+    }
+
+    if (mapImage) {
+        pdfContent.querySelector('#pdf-map-container').innerHTML = `<img src="${mapImage}" width="100%" />`;
+    } else {
+        pdfContent.querySelector('#pdf-map-container').innerHTML = '<p>Карта недоступна</p>';
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('p', 'mm', 'a4');
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 10;
+
+    const canvas = await html2canvas(pdfContent, { scale: 1.5, useCORS: true });
+    const imgData = canvas.toDataURL('image/png');
+    const imgWidth = pageWidth - margin * 2;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    doc.addImage(imgData, 'PNG', margin, margin, imgWidth, imgHeight);
+    doc.save(`${route.title.replace(/[^a-zа-яё0-9]/gi, '_')}.pdf`);
+
+    document.body.removeChild(pdfContent);
 }
 
 // ---------- Инициализация ----------
