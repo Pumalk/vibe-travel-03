@@ -252,7 +252,7 @@ function renderEvents() {
     main.innerHTML = `
     <section class="section">
       <h2>📅 Ближайшие события</h2>
-      <div class="cards-grid">
+      <div class="cards-grid centered">
         ${appData.events.map(e => `
           <div class="card event-card">
             <img data-src="assets/events/${e.photo}" alt="${e.name}" class="event-photo lazy" onerror="this.style.display='none'">
@@ -268,6 +268,35 @@ function renderEvents() {
     </section>
   `;
   observeLazyImages();
+}
+
+/**
+ * Страница избранного – показывает сохранённые маршруты.
+ */
+function renderFavorites() {
+    const favIds = getFavorites();
+    const favRoutes = appData.routes.filter(r => favIds.includes(r.id));
+    const main = document.getElementById('main-content');
+
+    if (favRoutes.length === 0) {
+        main.innerHTML = `
+            <section class="section">
+                <h2>❤️ Избранное</h2>
+                <p style="text-align:center; color:#6c757d; padding:2rem;">
+                    Пока ничего не добавлено. Нажми сердечко на странице маршрута, чтобы сохранить его здесь.
+                </p>
+            </section>`;
+    } else {
+        main.innerHTML = `
+            <section class="section">
+                <h2>❤️ Избранное (${favRoutes.length})</h2>
+                <div class="cards-grid centered">
+                    ${favRoutes.map(r => renderRouteCard(r)).join('')}
+                </div>
+            </section>`;
+    }
+    // Ленивая загрузка после рендера
+    observeLazyImages();
 }
 
 // ---------- Вспомогательные функции ----------
@@ -376,66 +405,97 @@ function isFavorite(routeId) {
 }
 
 /**
- * Генерирует и скачивает PDF-гид для маршрута.
- * Использует html2canvas для скриншота карты и jsPDF для сборки.
+ * Генерирует PDF-гид маршрута.
+ * Без карты — только текст, координаты и оформление.
  * @param {Object} route - объект маршрута
  */
 async function downloadPDF(route) {
-    const pdfContent = document.createElement('div');
-    pdfContent.style.position = 'absolute';
-    pdfContent.style.left = '-9999px';
-    pdfContent.style.width = '800px';
-    pdfContent.style.padding = '20px';
-    pdfContent.style.fontFamily = 'Inter, sans-serif';
-    pdfContent.innerHTML = `
-      <h1 style="font-family:Montserrat;">${route.title}</h1>
-      <p><strong>Теги:</strong> ${route.tags.map(t => tagLabels[t] || t).join(', ')}</p>
-      <p><strong>Длительность:</strong> ${route.duration} | <strong>Бюджет:</strong> ${route.budget} | <strong>Сезон:</strong> ${route.season.join(', ')}</p>
-      <h2>Описание</h2>
-      <p>${route.description}</p>
-      <h2>Транспорт</h2>
-      <p>${route.transport}</p>
-      <h2>Советы</h2>
-      <p>${route.tips}</p>
-      <h2>Точки маршрута</h2>
-      <ul>
-        ${route.points.map(p => `<li><strong>${p.name}</strong> (${p.type}): ${p.description} — координаты: ${p.coords.join(', ')}</li>`).join('')}
-      </ul>
-      <div id="pdf-map-container" style="height:300px; margin: 20px 0;"></div>
-    `;
-    document.body.appendChild(pdfContent);
+  // Создаём временный невидимый контейнер с контентом
+  const pdfDiv = document.createElement('div');
+  pdfDiv.style.position = 'absolute';
+  pdfDiv.style.left = '-9999px';
+  pdfDiv.style.top = '0';
+  pdfDiv.style.width = '800px';
+  pdfDiv.style.padding = '30px';
+  pdfDiv.style.backgroundColor = '#ffffff';
+  pdfDiv.style.fontFamily = 'Inter, Montserrat, sans-serif';
+  pdfDiv.style.color = '#212529';
 
-    const mapContainer = document.getElementById('detail-map');
-    let mapImage = '';
-    if (mapContainer && typeof html2canvas !== 'undefined') {
-        try {
-            const canvas = await html2canvas(mapContainer, { useCORS: true, scale: 1.5 });
-            mapImage = canvas.toDataURL('image/png');
-        } catch (e) {
-            console.warn('Не удалось захватить карту для PDF', e);
-        }
+  pdfDiv.innerHTML = `
+    <div style="background-color:#e07a5f; padding:20px; margin-bottom:20px; color:white; font-family:Montserrat; font-size:22px; font-weight:800;">
+      VIBE TRAVEL 03
+    </div>
+    <h1 style="font-family:Montserrat; font-weight:800; font-size:28px; margin-top:0;">${route.title}</h1>
+    <p style="color:#6c757d; font-size:14px;">
+      ${route.tags.map(t => tagLabels[t] || t).join(', ')} · ${route.duration} · ${route.budget} · Сезон: ${route.season.join(', ')}
+    </p>
+    <p style="font-size:16px;">${route.description}</p>
+    <h3 style="font-family:Montserrat; font-weight:700;">📍 Транспорт</h3>
+    <p>${route.transport}</p>
+    <h3 style="font-family:Montserrat; font-weight:700;">💡 Советы</h3>
+    <p>${route.tips}</p>
+    <h3 style="font-family:Montserrat; font-weight:700;">📍 Точки и координаты</h3>
+    <ul style="list-style:none; padding-left:0;">
+      ${route.points.map((p, i) => `
+        <li style="margin-bottom:8px; font-size:14px;">
+          <strong>${i+1}. ${p.name} (${p.type})</strong><br>
+          ${p.description}<br>
+          <span style="color:#6c757d;">Координаты: ${p.coords.join(', ')}</span>
+        </li>
+      `).join('')}
+    </ul>
+    <hr style="margin-top:30px;">
+    <p style="text-align:center; color:#adb5bd; font-size:12px;">Этот гид создан VIBE TRAVEL 03 · Сохрани и путешествуй!</p>
+  `;
+
+  document.body.appendChild(pdfDiv);
+
+  // Захватываем всё содержимое через html2canvas
+  const canvas = await html2canvas(pdfDiv, { scale: 1.5 });
+  document.body.removeChild(pdfDiv);
+
+  const imgData = canvas.toDataURL('image/png');
+
+  // Генерируем PDF с учётом возможной многостраничности
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF('p', 'mm', 'a4');
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const margin = 10;
+  const imgWidth = pageWidth - margin * 2;
+  const totalCanvasHeight = canvas.height;
+  const scaleRatio = canvas.width / imgWidth;
+  const totalHeightMm = totalCanvasHeight / scaleRatio;
+  const maxContentHeight = pageHeight - margin * 2;
+
+  let sourceY = 0;
+  let remainingHeight = totalHeightMm;
+
+  // Если всё помещается на одну страницу — выводим один раз
+  if (remainingHeight <= maxContentHeight + 1) {
+    doc.addImage(imgData, 'PNG', margin, margin, imgWidth, totalHeightMm);
+  } else {
+    // Разбиваем на несколько страниц
+    while (remainingHeight > 1) {
+      const sliceHeightMm = Math.min(remainingHeight, maxContentHeight);
+      const sliceHeightPx = sliceHeightMm * scaleRatio;
+
+      const sliceCanvas = document.createElement('canvas');
+      sliceCanvas.width = canvas.width;
+      sliceCanvas.height = Math.ceil(sliceHeightPx);
+      const ctx = sliceCanvas.getContext('2d');
+      ctx.drawImage(canvas, 0, sourceY, canvas.width, sliceCanvas.height, 0, 0, canvas.width, sliceCanvas.height);
+
+      const sliceData = sliceCanvas.toDataURL('image/png');
+      if (sourceY > 0) doc.addPage();
+      doc.addImage(sliceData, 'PNG', margin, margin, imgWidth, sliceHeightMm);
+
+      sourceY += sliceCanvas.height;
+      remainingHeight -= sliceCanvas.height / scaleRatio;
     }
+  }
 
-    if (mapImage) {
-        pdfContent.querySelector('#pdf-map-container').innerHTML = `<img src="${mapImage}" width="100%" />`;
-    } else {
-        pdfContent.querySelector('#pdf-map-container').innerHTML = '<p>Карта недоступна</p>';
-    }
-
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF('p', 'mm', 'a4');
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const margin = 10;
-
-    const canvas = await html2canvas(pdfContent, { scale: 1.5, useCORS: true });
-    const imgData = canvas.toDataURL('image/png');
-    const imgWidth = pageWidth - margin * 2;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-    doc.addImage(imgData, 'PNG', margin, margin, imgWidth, imgHeight);
-    doc.save(`${route.title.replace(/[^a-zа-яё0-9]/gi, '_')}.pdf`);
-
-    document.body.removeChild(pdfContent);
+  doc.save(`${route.title.replace(/[^a-zа-яё0-9]/gi, '_')}.pdf`);
 }
 
 // ---------- Инициализация ----------
@@ -448,7 +508,8 @@ async function initApp() {
         '/routes': () => renderRoutes(),
         '/routes/:id': (params) => renderRouteDetail(params.id),
         '/map': () => renderMapPage(),
-        '/events': () => renderEvents()
+        '/events': () => renderEvents(),
+        '/favorites': () => renderFavorites()
     });
 
     preloader.classList.add('hidden');

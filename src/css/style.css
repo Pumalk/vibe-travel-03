@@ -3,6 +3,26 @@
   --font-heading: "Montserrat", sans-serif;
   --font-text: "Inter", sans-serif;
 
+  /* === ЛОКАЛЬНЫЙ ШРИФТ MONTSERRAT === */
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('../assets/fonts/Montserrat/static/Montserrat-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('../assets/fonts/Montserrat/static/Montserrat-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('../assets/fonts/Montserrat/static/Montserrat-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+  }
+
   /* Основные цвета */
   --color-bg: #f8f9fa;
   --color-text: #212529;
@@ -211,11 +231,23 @@ body {
   color: var(--color-secondary);
 }
 
-/* === СЕТКА КАРТОЧЕК === */
+/* === СЕТКА ДЛЯ МАРШРУТОВ (GRID) === */
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
+}
+
+/* === ЦЕНТРИРОВАННАЯ СЕТКА ДЛЯ СОБЫТИЙ / ИЗБРАННОГО (FLEX) === */
+.cards-grid.centered {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+.cards-grid.centered .card {
+  width: 300px;
+  flex: 0 0 auto;
 }
 
 /* === КАРТОЧКА МАРШРУТА / СОБЫТИЯ === */
