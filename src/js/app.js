@@ -5,32 +5,32 @@
 
 // Глобальные данные
 const appData = {
-    routes: [],
-    events: []
+  routes: [],
+  events: []
 };
 
 // Загрузка JSON
 async function loadData() {
-    try {
-        const [routesRes, eventsRes] = await Promise.all([
-            fetch('data/routes.json'),
-            fetch('data/events.json')
-        ]);
-        appData.routes = await routesRes.json();
-        appData.events = await eventsRes.json();
-        console.log('✅ Данные загружены');
-    } catch (e) {
-        console.error('Ошибка загрузки', e);
-    }
+  try {
+    const [routesRes, eventsRes] = await Promise.all([
+      fetch('data/routes.json'),
+      fetch('data/events.json')
+    ]);
+    appData.routes = await routesRes.json();
+    appData.events = await eventsRes.json();
+    console.log('✅ Данные загружены');
+  } catch (e) {
+    console.error('Ошибка загрузки', e);
+  }
 }
 
 // ---------- Рендеры страниц ----------
 
 function renderHome() {
-    const main = document.getElementById('main-content');
-    const topRoutes = [...appData.routes].sort(() => 0.5 - Math.random()).slice(0, 3);
+  const main = document.getElementById('main-content');
+  const topRoutes = [...appData.routes].sort(() => 0.5 - Math.random()).slice(0, 3);
 
-    main.innerHTML = `
+  main.innerHTML = `
     <section class="hero">
       <div class="hero-overlay"></div>
       <div class="hero-content">
@@ -50,18 +50,18 @@ function renderHome() {
     </section>
   `;
 
-    // После вставки HTML инициализируем карту
-    initPreviewMap();
-    observeLazyImages();
+  // После вставки HTML инициализируем карту
+  initPreviewMap();
+  observeLazyImages();
 }
 
 function renderRoutes() {
-    const main = document.getElementById('main-content');
+  const main = document.getElementById('main-content');
 
-    // Уникальные теги для чипсов
-    const allTags = [...new Set(appData.routes.flatMap(r => r.tags))];
+  // Уникальные теги для чипсов
+  const allTags = [...new Set(appData.routes.flatMap(r => r.tags))];
 
-    main.innerHTML = `
+  main.innerHTML = `
     <section class="section">
       <h2>Все маршруты</h2>
       <!-- Фильтры -->
@@ -95,68 +95,68 @@ function renderRoutes() {
     </section>
   `;
 
-    // Привязываем фильтры
-    setupFilters();
-    updateRoutesGrid();
-    observeLazyImages();
+  // Привязываем фильтры
+  setupFilters();
+  updateRoutesGrid();
+  observeLazyImages();
 }
 
 /**
  * Навешивает обработчики на фильтры и вызывает обновление списка.
  */
 function setupFilters() {
-    const chips = document.querySelectorAll('#tag-filters .chip');
-    chips.forEach(chip => {
-        chip.addEventListener('click', function () {
-            this.classList.toggle('active');
-            updateRoutesGrid();
-        });
+  const chips = document.querySelectorAll('#tag-filters .chip');
+  chips.forEach(chip => {
+    chip.addEventListener('click', function () {
+      this.classList.toggle('active');
+      updateRoutesGrid();
     });
+  });
 
-    document.getElementById('filter-duration').addEventListener('change', updateRoutesGrid);
-    document.getElementById('filter-budget').addEventListener('change', updateRoutesGrid);
-    document.getElementById('filter-season').addEventListener('change', updateRoutesGrid);
+  document.getElementById('filter-duration').addEventListener('change', updateRoutesGrid);
+  document.getElementById('filter-budget').addEventListener('change', updateRoutesGrid);
+  document.getElementById('filter-season').addEventListener('change', updateRoutesGrid);
 }
 
 /**
  * Фильтрует маршруты по выбранным параметрам и перерисовывает сетку.
  */
 function updateRoutesGrid() {
-    const activeTags = [...document.querySelectorAll('#tag-filters .chip.active')].map(c => c.dataset.tag);
-    const duration = document.getElementById('filter-duration').value;
-    const budget = document.getElementById('filter-budget').value;
-    const season = document.getElementById('filter-season').value;
+  const activeTags = [...document.querySelectorAll('#tag-filters .chip.active')].map(c => c.dataset.tag);
+  const duration = document.getElementById('filter-duration').value;
+  const budget = document.getElementById('filter-budget').value;
+  const season = document.getElementById('filter-season').value;
 
-    let filtered = appData.routes;
-    if (activeTags.length > 0) {
-        filtered = filtered.filter(r => activeTags.some(tag => r.tags.includes(tag)));
-    }
-    if (duration) filtered = filtered.filter(r => r.duration === duration);
-    if (budget) filtered = filtered.filter(r => r.budget === budget);
-    if (season) filtered = filtered.filter(r => r.season.includes(season));
+  let filtered = appData.routes;
+  if (activeTags.length > 0) {
+    filtered = filtered.filter(r => activeTags.some(tag => r.tags.includes(tag)));
+  }
+  if (duration) filtered = filtered.filter(r => r.duration === duration);
+  if (budget) filtered = filtered.filter(r => r.budget === budget);
+  if (season) filtered = filtered.filter(r => r.season.includes(season));
 
-    const grid = document.getElementById('routes-grid');
-    if (grid) {
-        grid.innerHTML = '';
-        if (filtered.length === 0) {
-            grid.innerHTML = '<p class="no-results">😔 Ничего не найдено. Попробуйте изменить фильтры.</p>';
-        } else {
-            grid.innerHTML = filtered.map(r => renderRouteCard(r)).join('');
-        }
+  const grid = document.getElementById('routes-grid');
+  if (grid) {
+    grid.innerHTML = '';
+    if (filtered.length === 0) {
+      grid.innerHTML = '<p class="no-results">😔 Ничего не найдено. Попробуйте изменить фильтры.</p>';
+    } else {
+      grid.innerHTML = filtered.map(r => renderRouteCard(r)).join('');
     }
+  }
 }
 
 function renderRouteDetail(id) {
-    const route = appData.routes.find(r => r.id == id);
-    if (!route) {
-        document.getElementById('main-content').innerHTML = '<h2>Маршрут не найден</h2>';
-        return;
-    }
+  const route = appData.routes.find(r => r.id == id);
+  if (!route) {
+    document.getElementById('main-content').innerHTML = '<h2>Маршрут не найден</h2>';
+    return;
+  }
 
-    const tagNames = route.tags.map(t => tagLabels[t] || t).join(', ');
+  const tagNames = route.tags.map(t => tagLabels[t] || t).join(', ');
 
-    const main = document.getElementById('main-content');
-    main.innerHTML = `
+  const main = document.getElementById('main-content');
+  main.innerHTML = `
     <section class="section">
       <h2>${route.title}</h2>
       <p style="font-size:1.1rem;">${route.description}</p>
@@ -194,62 +194,65 @@ function renderRouteDetail(id) {
     </section>
   `;
 
-    // Инициализация галереи (лайтбокс)
-    initGallery('.gallery-container');
+  // Инициализация галереи (лайтбокс)
+  initGallery('.gallery-container');
 
-    // Карта
-    initDetailMap(route);
+  // Карта
+  initDetailMap(route);
 
-    // Кнопка «Поделиться»
-    document.getElementById('share-btn').addEventListener('click', function () {
-        const url = window.location.href;
-        if (navigator.share) {
-            navigator.share({
-                title: route.title,
-                text: route.description,
-                url: url
-            }).catch(() => { });
-        } else {
-            navigator.clipboard.writeText(url).then(() => {
-                alert('Ссылка скопирована!');
-            });
-        }
-    });
+  // Запускаем ленивую загрузку фото
+  observeLazyImages();
 
-    // Кнопка избранного
-    const favBtn = document.getElementById('fav-btn');
-    favBtn.addEventListener('click', function () {
-        if (isFavorite(route.id)) {
-            removeFavorite(route.id);
-            this.innerHTML = '🤍 В избранное';
-        } else {
-            addFavorite(route.id);
-            this.innerHTML = '❤️ В избранном';
-        }
-    });
+  // Кнопка «Поделиться»
+  document.getElementById('share-btn').addEventListener('click', function () {
+    const url = window.location.href;
+    if (navigator.share) {
+      navigator.share({
+        title: route.title,
+        text: route.description,
+        url: url
+      }).catch(() => { });
+    } else {
+      navigator.clipboard.writeText(url).then(() => {
+        alert('Ссылка скопирована!');
+      });
+    }
+  });
 
-    // Кнопка скачать PDF
-    document.getElementById('pdf-btn').addEventListener('click', () => downloadPDF(route));
+  // Кнопка избранного
+  const favBtn = document.getElementById('fav-btn');
+  favBtn.addEventListener('click', function () {
+    if (isFavorite(route.id)) {
+      removeFavorite(route.id);
+      this.innerHTML = '🤍 В избранное';
+    } else {
+      addFavorite(route.id);
+      this.innerHTML = '❤️ В избранном';
+    }
+  });
 
-    // Кнопки построения маршрута
-    document.getElementById('build-route-yandex').addEventListener('click', () => {
-        window.open(buildRouteLink(route, 'yandex'), '_blank');
-    });
+  // Кнопка скачать PDF
+  document.getElementById('pdf-btn').addEventListener('click', () => downloadPDF(route));
+
+  // Кнопки построения маршрута
+  document.getElementById('build-route-yandex').addEventListener('click', () => {
+    window.open(buildRouteLink(route, 'yandex'), '_blank');
+  });
 }
 
 function renderMapPage() {
-    document.getElementById('main-content').innerHTML = `
+  document.getElementById('main-content').innerHTML = `
     <section class="section">
       <h2>Интерактивная карта</h2>
       <div id="full-map" style="height:500px; border-radius:12px;"></div>
     </section>
   `;
-    initFullMap();
+  initFullMap();
 }
 
 function renderEvents() {
-    const main = document.getElementById('main-content');
-    main.innerHTML = `
+  const main = document.getElementById('main-content');
+  main.innerHTML = `
     <section class="section">
       <h2>📅 Ближайшие события</h2>
       <div class="cards-grid centered">
@@ -274,63 +277,63 @@ function renderEvents() {
  * Страница избранного – показывает сохранённые маршруты.
  */
 function renderFavorites() {
-    const favIds = getFavorites();
-    const favRoutes = appData.routes.filter(r => favIds.includes(r.id));
-    const main = document.getElementById('main-content');
+  const favIds = getFavorites();
+  const favRoutes = appData.routes.filter(r => favIds.includes(r.id));
+  const main = document.getElementById('main-content');
 
-    if (favRoutes.length === 0) {
-        main.innerHTML = `
+  if (favRoutes.length === 0) {
+    main.innerHTML = `
             <section class="section">
                 <h2>❤️ Избранное</h2>
                 <p style="text-align:center; color:#6c757d; padding:2rem;">
                     Пока ничего не добавлено. Нажми сердечко на странице маршрута, чтобы сохранить его здесь.
                 </p>
             </section>`;
-    } else {
-        main.innerHTML = `
+  } else {
+    main.innerHTML = `
             <section class="section">
                 <h2>❤️ Избранное (${favRoutes.length})</h2>
                 <div class="cards-grid centered">
                     ${favRoutes.map(r => renderRouteCard(r)).join('')}
                 </div>
             </section>`;
-    }
-    // Ленивая загрузка после рендера
-    observeLazyImages();
+  }
+  // Ленивая загрузка после рендера
+  observeLazyImages();
 }
 
 // ---------- Вспомогательные функции ----------
 
 const tagLabels = {
-    'кайфовый_ракурс': 'Кайфовый ракурс',
-    'цифровой_детокс': 'Цифровой детокс',
-    'место_силы': 'Место силы',
-    'ветер_в_лицо': 'Ветер в лицо',
-    'буузы_и_точка': 'Буузы и точка',
-    'этно_погружение': 'Этно-погружение',
-    'дикий_Байкал': 'Дикий Байкал',
-    'городской_вайб': 'Городской вайб'
+  'кайфовый_ракурс': 'Кайфовый ракурс',
+  'цифровой_детокс': 'Цифровой детокс',
+  'место_силы': 'Место силы',
+  'ветер_в_лицо': 'Ветер в лицо',
+  'буузы_и_точка': 'Буузы и точка',
+  'этно_погружение': 'Этно-погружение',
+  'дикий_Байкал': 'Дикий Байкал',
+  'городской_вайб': 'Городской вайб'
 };
 
 function getGradientVar(tag) {
-    const map = {
-        'кайфовый_ракурс': '--gradient-sunset',
-        'цифровой_детокс': '--gradient-forest',
-        'место_силы': '--gradient-sacred',
-        'ветер_в_лицо': '--gradient-sky',
-        'буузы_и_точка': '--gradient-warm',
-        'этно_погружение': '--gradient-ethno',
-        'дикий_Байкал': '--gradient-wild',
-        'городской_вайб': '--gradient-urban'
-    };
-    return map[tag] || '--gradient-warm';
+  const map = {
+    'кайфовый_ракурс': '--gradient-sunset',
+    'цифровой_детокс': '--gradient-forest',
+    'место_силы': '--gradient-sacred',
+    'ветер_в_лицо': '--gradient-sky',
+    'буузы_и_точка': '--gradient-warm',
+    'этно_погружение': '--gradient-ethno',
+    'дикий_Байкал': '--gradient-wild',
+    'городской_вайб': '--gradient-urban'
+  };
+  return map[tag] || '--gradient-warm';
 }
 
 function renderRouteCard(route) {
-    const gradientVar = getGradientVar(route.tags[0]);
-    const tagNames = route.tags.map(t => tagLabels[t] || t).join(' · ');
+  const gradientVar = getGradientVar(route.tags[0]);
+  const tagNames = route.tags.map(t => tagLabels[t] || t).join(' · ');
 
-    return `
+  return `
     <div class="card" style="background: var(${gradientVar})">
       <div class="card-content">
         <h3>${route.title}</h3>
@@ -344,22 +347,22 @@ function renderRouteCard(route) {
 
 // Ленивая загрузка изображений – глобальный observer
 const lazyObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const img = entry.target;
-            img.src = img.dataset.src;
-            img.classList.remove('lazy');
-            observer.unobserve(img);
-        }
-    });
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const img = entry.target;
+      img.src = img.dataset.src;
+      img.classList.remove('lazy');
+      observer.unobserve(img);
+    }
+  });
 });
 
 function observeLazyImages() {
-    document.querySelectorAll('img.lazy').forEach(img => {
-        if (img.dataset.src && !img.src) {
-            lazyObserver.observe(img);
-        }
-    });
+  document.querySelectorAll('img.lazy').forEach(img => {
+    if (img.dataset.src && !img.src) {
+      lazyObserver.observe(img);
+    }
+  });
 }
 
 // ---------- ИЗБРАННОЕ (localStorage) ----------
@@ -369,8 +372,8 @@ function observeLazyImages() {
  * @returns {number[]}
  */
 function getFavorites() {
-    const raw = localStorage.getItem('vibe_favorites');
-    return raw ? JSON.parse(raw) : [];
+  const raw = localStorage.getItem('vibe_favorites');
+  return raw ? JSON.parse(raw) : [];
 }
 
 /**
@@ -378,11 +381,11 @@ function getFavorites() {
  * @param {number} routeId
  */
 function addFavorite(routeId) {
-    const favs = getFavorites();
-    if (!favs.includes(routeId)) {
-        favs.push(routeId);
-        localStorage.setItem('vibe_favorites', JSON.stringify(favs));
-    }
+  const favs = getFavorites();
+  if (!favs.includes(routeId)) {
+    favs.push(routeId);
+    localStorage.setItem('vibe_favorites', JSON.stringify(favs));
+  }
 }
 
 /**
@@ -390,9 +393,9 @@ function addFavorite(routeId) {
  * @param {number} routeId
  */
 function removeFavorite(routeId) {
-    let favs = getFavorites();
-    favs = favs.filter(id => id !== routeId);
-    localStorage.setItem('vibe_favorites', JSON.stringify(favs));
+  let favs = getFavorites();
+  favs = favs.filter(id => id !== routeId);
+  localStorage.setItem('vibe_favorites', JSON.stringify(favs));
 }
 
 /**
@@ -401,7 +404,7 @@ function removeFavorite(routeId) {
  * @returns {boolean}
  */
 function isFavorite(routeId) {
-    return getFavorites().includes(routeId);
+  return getFavorites().includes(routeId);
 }
 
 /**
@@ -438,7 +441,7 @@ async function downloadPDF(route) {
     <ul style="list-style:none; padding-left:0;">
       ${route.points.map((p, i) => `
         <li style="margin-bottom:8px; font-size:14px;">
-          <strong>${i+1}. ${p.name} (${p.type})</strong><br>
+          <strong>${i + 1}. ${p.name} (${p.type})</strong><br>
           ${p.description}<br>
           <span style="color:#6c757d;">Координаты: ${p.coords.join(', ')}</span>
         </li>
@@ -500,31 +503,31 @@ async function downloadPDF(route) {
 
 // ---------- Инициализация ----------
 async function initApp() {
-    const preloader = document.getElementById('preloader');
-    await loadData();
+  const preloader = document.getElementById('preloader');
+  await loadData();
 
-    const router = new Router({
-        '/': () => renderHome(),
-        '/routes': () => renderRoutes(),
-        '/routes/:id': (params) => renderRouteDetail(params.id),
-        '/map': () => renderMapPage(),
-        '/events': () => renderEvents(),
-        '/favorites': () => renderFavorites()
-    });
+  const router = new Router({
+    '/': () => renderHome(),
+    '/routes': () => renderRoutes(),
+    '/routes/:id': (params) => renderRouteDetail(params.id),
+    '/map': () => renderMapPage(),
+    '/events': () => renderEvents(),
+    '/favorites': () => renderFavorites()
+  });
 
-    preloader.classList.add('hidden');
-    setTimeout(() => preloader.remove(), 500);
+  preloader.classList.add('hidden');
+  setTimeout(() => preloader.remove(), 500);
 
-    // Бургер-меню
-    const burger = document.getElementById('burgerBtn');
-    const navList = document.getElementById('navList');
-    burger.addEventListener('click', () => navList.classList.toggle('active'));
-    navList.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navList.classList.remove('active')));
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.nav') && !e.target.closest('.burger')) {
-            navList.classList.remove('active');
-        }
-    });
+  // Бургер-меню
+  const burger = document.getElementById('burgerBtn');
+  const navList = document.getElementById('navList');
+  burger.addEventListener('click', () => navList.classList.toggle('active'));
+  navList.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navList.classList.remove('active')));
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav') && !e.target.closest('.burger')) {
+      navList.classList.remove('active');
+    }
+  });
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
