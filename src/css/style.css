@@ -168,8 +168,11 @@ body::before {
   color: var(--color-primary);
   text-decoration: none;
 }
-.logo span {
-  color: var(--color-secondary);
+.logo-img {
+  height: 1.8rem;        /* высота под размер текста */
+  width: auto;           /* сохраняет пропорции */
+  vertical-align: middle; /* выравнивание по центру строки */
+  margin-left: 0.3rem;   /* небольшой отступ от текста */
 }
 
 /* Навигация */

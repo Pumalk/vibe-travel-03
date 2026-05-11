@@ -425,8 +425,9 @@ async function downloadPDF(route) {
   pdfDiv.style.color = '#212529';
 
   pdfDiv.innerHTML = `
-    <div style="background-color:#e07a5f; padding:20px; margin-bottom:20px; color:white; font-family:Montserrat; font-size:22px; font-weight:800;">
-      VIBE TRAVEL 03
+        <div style="background: linear-gradient(to right, #0a5f38, #30d5c8); padding:20px; margin-bottom:20px; display: flex; align-items: center; justify-content: space-between;">
+      <span style="color:white; font-family:Montserrat; font-size:22px; font-weight:800;">VIBE TRAVEL 03</span>
+      <img src="assets/images/logo_black.svg" alt="Logo" style="height:50px; width:auto;">
     </div>
     <h1 style="font-family:Montserrat; font-weight:800; font-size:28px; margin-top:0;">${route.title}</h1>
     <p style="color:#6c757d; font-size:14px;">
