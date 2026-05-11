@@ -168,12 +168,12 @@ function renderRouteDetail(id) {
       <!-- Галерея (журнальный разворот) -->
       <div class="gallery-magazine">
         <div class="magazine-hero">
-          <img data-src="assets/images/${route.photos[0]}" alt="${route.title}" class="gallery-image lazy" onerror="this.src='https://via.placeholder.com/600x400?text=Фото'">
+          <img data-src="assets/gallery/${route.photos[0]}" alt="${route.title}" class="gallery-image lazy" onerror="this.src='https://via.placeholder.com/600x400?text=Фото'">
         </div>
         ${route.photos.length > 1 ? `
         <div class="magazine-side">
           ${route.photos.slice(1, 3).map(p => `
-            <img data-src="assets/images/${p}" alt="${route.title}" class="gallery-image lazy" onerror="this.src='https://via.placeholder.com/300x200?text=Фото'">
+            <img data-src="assets/gallery/${p}" alt="${route.title}" class="gallery-image lazy" onerror="this.src='https://via.placeholder.com/300x200?text=Фото'">
           `).join('')}
         </div>` : ''}
       </div>

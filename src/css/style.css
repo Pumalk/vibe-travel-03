@@ -232,7 +232,7 @@ body.fade-out {
   position: relative;
   height: 70vh;
   min-height: 400px;
-  background: url("/assets/images/baikal.jpg") center/cover no-repeat;
+  background: url("/assets/images/hero.jpg") center/cover no-repeat;
   background-attachment: fixed; /* Параллакс */
   display: flex;
   align-items: center;
