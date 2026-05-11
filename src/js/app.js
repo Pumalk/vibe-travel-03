@@ -588,6 +588,9 @@ async function initApp() {
     '/favorites': () => navigateTo(renderFavorites)
   });
 
+  // Первый рендер – сразу, а не по событию load
+  router.resolve();
+
   preloader.classList.add('hidden');
   setTimeout(() => preloader.remove(), 500);
 
