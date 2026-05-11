@@ -69,6 +69,8 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  transition: opacity 0.3s ease;
+  opacity: 1;
 }
 
 /* Фоновый бурятский орнамент по углам */
@@ -91,6 +93,9 @@ body::before {
   background-size: 200px 200px;
   background-repeat: no-repeat;
   pointer-events: none;
+}
+body.fade-out {
+  opacity: 0;
 }
 
 /* === ПРЕЛОАДЕР === */
@@ -154,10 +159,12 @@ body::before {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  transition: none;
 }
 /* Основной контент — занимает всё доступное пространство, толкая футер вниз */
 #main-content {
   flex: 1 0 auto;
+  transition: none;
 }
 
 /* Логотип */
@@ -444,7 +451,6 @@ body::before {
   background: white;
 }
 
-
 /* Лайтбокс */
 .lightbox {
   display: none;
@@ -581,7 +587,9 @@ body::before {
   object-fit: cover;
   border-radius: 8px;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .magazine-hero img {
@@ -600,5 +608,5 @@ body::before {
 .magazine-hero img:hover,
 .magazine-side img:hover {
   transform: scale(1.02);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }

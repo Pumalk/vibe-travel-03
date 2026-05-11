@@ -564,8 +564,8 @@ async function initApp() {
 
   // Функция-обёртка для плавного перехода
   async function navigateTo(renderFn, params) {
-    const app = document.getElementById('app');
-    app.classList.add('fade-out');
+    const body = document.body;
+    body.classList.add('fade-out');
     await new Promise(resolve => setTimeout(resolve, 300));
     // рендер
     if (params) {
@@ -573,8 +573,9 @@ async function initApp() {
     } else {
       renderFn();
     }
-    app.classList.remove('fade-out');
-    app.style.opacity = '1';
+    body.classList.remove('fade-out');
+    // на всякий случай сбросим opacity, если класс не удалился
+    body.style.opacity = '1';
     window.scrollTo(0, 0);
   }
 
