@@ -5,20 +5,23 @@
 
   /* === ЛОКАЛЬНЫЙ ШРИФТ MONTSERRAT === */
   @font-face {
-    font-family: 'Montserrat';
-    src: url('../assets/fonts/Montserrat/static/Montserrat-Regular.ttf') format('truetype');
+    font-family: "Montserrat";
+    src: url("../assets/fonts/Montserrat/static/Montserrat-Regular.ttf")
+      format("truetype");
     font-weight: 400;
     font-style: normal;
   }
   @font-face {
-    font-family: 'Montserrat';
-    src: url('../assets/fonts/Montserrat/static/Montserrat-Bold.ttf') format('truetype');
+    font-family: "Montserrat";
+    src: url("../assets/fonts/Montserrat/static/Montserrat-Bold.ttf")
+      format("truetype");
     font-weight: 700;
     font-style: normal;
   }
   @font-face {
-    font-family: 'Montserrat';
-    src: url('../assets/fonts/Montserrat/static/Montserrat-ExtraBold.ttf') format('truetype');
+    font-family: "Montserrat";
+    src: url("../assets/fonts/Montserrat/static/Montserrat-ExtraBold.ttf")
+      format("truetype");
     font-weight: 800;
     font-style: normal;
   }
@@ -32,7 +35,7 @@
   /* Градиенты для тегов */
   --gradient-sunset: linear-gradient(135deg, #ff6b35, #f7c948);
   --gradient-forest: linear-gradient(135deg, #2d6a4f, #52b788);
-  --gradient-sacred: linear-gradient(135deg, #5f0f40, #9b2226);
+  --gradient-sacred: linear-gradient(135deg, #ffd700, #9b2226);
   --gradient-sky: linear-gradient(135deg, #0077b6, #00b4d8);
   --gradient-warm: linear-gradient(135deg, #e07a5f, #f2cc8f);
   --gradient-ethno: linear-gradient(135deg, #9c89b8, #f0a6ca);
@@ -66,6 +69,28 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+/* Фоновый бурятский орнамент по углам */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.3; /* едва заметный */
+  background-image:
+    url("../../assets/images/left\ up.svg"),
+    url("../../assets/images/right\ up.svg"),
+    url("../../assets/images/left\ down.svg"),
+    url("../../assets/images/right\ down.svg");
+  background-position:
+    left 75px,
+    right 75px,
+    bottom left,
+    bottom right;
+  background-size: 200px 200px;
+  background-repeat: no-repeat;
+  pointer-events: none;
 }
 
 /* === ПРЕЛОАДЕР === */
@@ -108,8 +133,7 @@ body {
 
 /* === ШАПКА === */
 .header {
-  background: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background: var(--color-bg);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -185,13 +209,12 @@ body {
 
 /* === ПОДВАЛ === */
 .footer {
-  background: white;
+  background: none;
   text-align: center;
   padding: 1.5rem 1rem;
   margin-top: auto;
   font-size: 0.9rem;
   color: #6c757d;
-  border-top: 1px solid #eee;
 }
 
 /* === HERO-СЕКЦИЯ (Главная) === */
@@ -538,4 +561,52 @@ body {
   color: #6c757d;
   padding: 2rem;
   font-size: 1.1rem;
+}
+
+/* FAB-кнопка пасхалки */
+#buuza-fab {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+#buuza-fab:hover {
+  transform: scale(1.1);
+}
+#buuza-fab img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.falling-buuza {
+  position: fixed;
+  top: -80px;
+  z-index: 999;
+  width: 50px;
+  height: auto;
+  pointer-events: auto;          /* можно кликать */
+  animation: fall linear forwards;
+  transition: opacity 0.3s ease;
+  cursor: pointer;               /* показываем, что кликабельно */
+}
+.falling-buuza:hover {
+  cursor: pointer;
+}
+@keyframes fall {
+  to {
+    top: calc(100vh - 60px);
+    transform: rotate(360deg);
+  }
 }

@@ -501,18 +501,86 @@ async function downloadPDF(route) {
   doc.save(`${route.title.replace(/[^a-zа-яё0-9]/gi, '_')}.pdf`);
 }
 
+// ---------- ПАСХАЛКА «БУУЗЫ» ----------
+function initBuuzaEasterEgg() {
+  const fab = document.getElementById('buuza-fab');
+  if (!fab) return;
+
+  fab.addEventListener('click', () => {
+    spawnBuuza();
+    if (navigator.vibrate) navigator.vibrate(50);
+  });
+}
+
+function spawnBuuza() {
+  const count = Math.floor(Math.random() * 11) + 10; // 10–20 бууз
+  for (let i = 0; i < count; i++) {
+    const img = document.createElement('img');
+    img.src = 'assets/images/buuza.png';
+    img.className = 'falling-buuza';
+    img.style.left = Math.random() * 90 + 5 + '%';
+    const duration = Math.random() * 2 + 2;
+    img.style.animationDuration = duration + 's';
+    img.style.animationDelay = Math.random() * 0.5 + 's';
+    document.body.appendChild(img);
+
+    // Удаление по клику (мгновенное)
+    img.addEventListener('click', (e) => {
+      e.stopPropagation();
+      img.style.opacity = '0';
+      setTimeout(() => img.remove(), 300);
+    });
+
+    // Автоудаление через 60 секунд, если не кликнули
+    const autoRemoveTimer = setTimeout(() => {
+      if (img.parentNode) {
+        img.style.opacity = '0';
+        setTimeout(() => img.remove(), 300);
+      }
+    }, 60000);
+
+    // Очищаем таймер, если удалили кликом раньше
+    img.addEventListener('click', () => {
+      clearTimeout(autoRemoveTimer);
+    }, { once: true }); // once: true, чтобы не накапливать обработчики
+
+    // Ограничение: если бууз больше 30, удаляем самую старую
+    const allBuuz = document.querySelectorAll('.falling-buuza');
+    if (allBuuz.length > 30) {
+      allBuuz[0].style.opacity = '0';
+      setTimeout(() => allBuuz[0].remove(), 300);
+    }
+  }
+}
+
 // ---------- Инициализация ----------
 async function initApp() {
   const preloader = document.getElementById('preloader');
   await loadData();
 
+  // Функция-обёртка для плавного перехода
+  async function navigateTo(renderFn, params) {
+    const app = document.getElementById('app');
+    app.classList.add('fade-out');
+    await new Promise(resolve => setTimeout(resolve, 300));
+    // рендер
+    if (params) {
+      renderFn(params);
+    } else {
+      renderFn();
+    }
+    app.classList.remove('fade-out');
+    app.style.opacity = '1';
+    window.scrollTo(0, 0);
+  }
+
   const router = new Router({
-    '/': () => renderHome(),
-    '/routes': () => renderRoutes(),
-    '/routes/:id': (params) => renderRouteDetail(params.id),
-    '/map': () => renderMapPage(),
-    '/events': () => renderEvents(),
-    '/favorites': () => renderFavorites()
+    '/': () => navigateTo(renderHome),
+    '/routes': () => navigateTo(renderRoutes),
+    '/routes/:id': (params) => navigateTo(() => renderRouteDetail(params.id)),
+    '/map': () => navigateTo(renderMapPage),
+    '/events': () => navigateTo(renderEvents),
+    '/favorites': () => navigateTo(renderFavorites)
   });
 
   preloader.classList.add('hidden');
@@ -528,6 +596,8 @@ async function initApp() {
       navList.classList.remove('active');
     }
   });
+
+  initBuuzaEasterEgg();
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
