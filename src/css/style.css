@@ -169,10 +169,10 @@ body::before {
   text-decoration: none;
 }
 .logo-img {
-  height: 1.8rem;        /* высота под размер текста */
-  width: auto;           /* сохраняет пропорции */
+  height: 1.8rem; /* высота под размер текста */
+  width: auto; /* сохраняет пропорции */
   vertical-align: middle; /* выравнивание по центру строки */
-  margin-left: 0.3rem;   /* небольшой отступ от текста */
+  margin-left: 0.3rem; /* небольшой отступ от текста */
 }
 
 /* Навигация */
@@ -444,50 +444,6 @@ body::before {
   background: white;
 }
 
-/* ========== ДЕТАЛЬНАЯ СТРАНИЦА: ГАЛЕРЕЯ ========== */
-.gallery-container {
-  margin: 1.5rem 0;
-}
-/* На мобильных – горизонтальный скролл */
-.gallery-scroll {
-  display: flex;
-  gap: 0.5rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
-}
-.gallery-scroll .gallery-image {
-  height: 250px;
-  border-radius: 8px;
-  object-fit: cover;
-  cursor: pointer;
-  transition: transform 0.2s;
-  scroll-snap-align: start;
-  flex-shrink: 0;
-}
-.gallery-scroll .gallery-image:hover {
-  transform: scale(1.02);
-}
-
-/* На десктопе – сетка */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 0.5rem;
-}
-.gallery-grid .gallery-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-.gallery-grid .gallery-image:hover {
-  transform: scale(1.02);
-}
 
 /* Лайтбокс */
 .lightbox {
@@ -514,22 +470,6 @@ body::before {
   max-width: 90vw;
   max-height: 80vh;
   object-fit: contain;
-}
-
-/* ========== АДАПТИВ: ПЕРЕКЛЮЧЕНИЕ ГАЛЕРЕИ ========== */
-.gallery-desktop {
-  display: none;
-}
-.gallery-mobile {
-  display: block;
-}
-@media (min-width: 769px) {
-  .gallery-desktop {
-    display: block;
-  }
-  .gallery-mobile {
-    display: none;
-  }
 }
 
 /* Кнопки в детальной странице */
@@ -599,10 +539,10 @@ body::before {
   z-index: 999;
   width: 50px;
   height: auto;
-  pointer-events: auto;          /* можно кликать */
+  pointer-events: auto; /* можно кликать */
   animation: fall linear forwards;
   transition: opacity 0.3s ease;
-  cursor: pointer;               /* показываем, что кликабельно */
+  cursor: pointer; /* показываем, что кликабельно */
 }
 .falling-buuza:hover {
   cursor: pointer;
@@ -612,4 +552,53 @@ body::before {
     top: calc(100vh - 60px);
     transform: rotate(360deg);
   }
+}
+/* ========== ГАЛЕРЕЯ: ЖУРНАЛЬНЫЙ РАЗВОРОТ (до 3 фото) ========== */
+.gallery-magazine {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  height: 400px;
+}
+
+/* Большое фото слева */
+.magazine-hero {
+  flex: 2;
+}
+
+/* Колонка справа (1 или 2 фото) */
+.magazine-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Общие стили для всех изображений */
+.magazine-hero img,
+.magazine-side img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.magazine-hero img {
+  height: 100%;
+}
+
+/* Если боковое фото одно, оно займёт всю высоту; если два — высота делится пополам */
+.magazine-side img {
+  height: calc(50% - 0.5rem);
+}
+/* Автоматическая адаптация: если в боковой колонке только одно фото, растягиваем */
+.magazine-side img:only-child {
+  height: 100%;
+}
+
+.magazine-hero img:hover,
+.magazine-side img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }

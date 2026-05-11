@@ -165,14 +165,17 @@ function renderRouteDetail(id) {
       <p><strong>Транспорт:</strong> ${route.transport}</p>
       <p><strong>Советы:</strong> ${route.tips}</p>
 
-      <!-- Галерея -->
-      <div class="gallery-container">
-        <div class="gallery-mobile gallery-scroll">
-          ${route.photos.map(p => `<img data-src="assets/images/${p}" alt="Фото маршрута" class="gallery-image lazy" onerror="this.src='https://via.placeholder.com/400x250?text=Фото'">`).join('')}
+      <!-- Галерея (журнальный разворот) -->
+      <div class="gallery-magazine">
+        <div class="magazine-hero">
+          <img data-src="assets/images/${route.photos[0]}" alt="${route.title}" class="gallery-image lazy" onerror="this.src='https://via.placeholder.com/600x400?text=Фото'">
         </div>
-        <div class="gallery-desktop gallery-grid">
-          ${route.photos.map(p => `<img data-src="assets/images/${p}" alt="Фото маршрута" class="gallery-image lazy" onerror="this.src='https://via.placeholder.com/400x300?text=Фото'">`).join('')}
-        </div>
+        ${route.photos.length > 1 ? `
+        <div class="magazine-side">
+          ${route.photos.slice(1, 3).map(p => `
+            <img data-src="assets/images/${p}" alt="${route.title}" class="gallery-image lazy" onerror="this.src='https://via.placeholder.com/300x200?text=Фото'">
+          `).join('')}
+        </div>` : ''}
       </div>
 
       <!-- Точки маршрута -->
@@ -195,7 +198,7 @@ function renderRouteDetail(id) {
   `;
 
   // Инициализация галереи (лайтбокс)
-  initGallery('.gallery-container');
+  initGallery('.gallery-magazine');
 
   // Карта
   initDetailMap(route);
