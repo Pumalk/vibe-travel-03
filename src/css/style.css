@@ -8,7 +8,7 @@
   --color-primary: #e07a5f;
   --color-primary-hover: #c05a42;
   --color-secondary: #5a7d6c;
-  --color-accent-sand: #c4a57b;
+  --color-accent-sand: #a38560;
   --font-display: "Playfair Display", serif;
   --font-body: "Inter", sans-serif;
   --transition: 0.25s ease-in-out;
@@ -17,7 +17,7 @@
 
   --gradient-sunset: linear-gradient(135deg, #ff6b35, #f7c948);
   --gradient-forest: linear-gradient(135deg, #2d6a4f, #52b788);
-  --gradient-sacred: linear-gradient(135deg, #ffd700, #9b2226);
+  --gradient-sacred: linear-gradient(135deg, #9b2226, #ffd700);
   --gradient-sky: linear-gradient(135deg, #0077b6, #00b4d8);
   --gradient-warm: linear-gradient(135deg, #e07a5f, #f2cc8f);
   --gradient-ethno: linear-gradient(135deg, #9c89b8, #f0a6ca);
