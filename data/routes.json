@@ -30,7 +30,7 @@
     "description": "Если нужен настоящий #цифровой_детокс — тебе сюда. Днём купаешься в Байкале, вечером жаришь маршмеллоу у костра, а ночью смотришь на звёзды без городского света.",
     "transport": "Автомобиль из Улан-Удэ, около 2.5 часов.",
     "tips": "Захвати тёплую кофту: даже летом ночи у Байкала прохладные.",
-    "photos": ["baikal.jpg", "baikal.jpg", "baikal.jpg"]
+    "photos": ["baikal.jpg", "baikal 2.jpg", "baikal 3.jpg"]
   },
   {
     "id": 2,
@@ -63,7 +63,7 @@
     "description": "Маршрут для тех, кто хочет убежать из города и поймать настоящий #ветер_в_лицо среди Саянских гор.",
     "transport": "Автобус или автомобиль.",
     "tips": "Для походов пригодятся треккинговые кроссовки.",
-    "photos": ["baikal.jpg", "baikal.jpg", "baikal.jpg"]
+    "photos": ["baikal.jpg", "baikal 2.jpg", "baikal 3.jpg"]
   },
   {
     "id": 3,
@@ -96,7 +96,7 @@
     "description": "Один день, чтобы почувствовать настоящий #городской_вайб Улан-Удэ и устроить гастро-забег по буузным.",
     "transport": "Пешком и трамвай.",
     "tips": "Лучшее время для фото — закат.",
-    "photos": ["baikal.jpg", "baikal.jpg", "baikal.jpg"]
+    "photos": ["baikal.jpg", "baikal 2.jpg", "baikal 3.jpg"]
   },
   {
     "id": 4,
@@ -129,7 +129,7 @@
     "description": "Тот самый маршрут, где #место_силы встречается с суровой природой и настоящим духом Бурятии.",
     "transport": "Автомобиль.",
     "tips": "Скачай офлайн-карты заранее.",
-    "photos": ["baikal.jpg", "baikal.jpg", "baikal.jpg"]
+    "photos": ["baikal.jpg", "baikal 2.jpg", "baikal 3.jpg"]
   },
   {
     "id": 5,
@@ -156,7 +156,7 @@
     "description": "Полное #этно_погружение: песни, печка, домашняя кухня и атмосфера старой Бурятии.",
     "transport": "Автомобиль.",
     "tips": "Лучше ехать в выходные — больше активностей.",
-    "photos": ["baikal.jpg", "baikal.jpg", "baikal.jpg"]
+    "photos": ["baikal.jpg", "baikal 2.jpg", "baikal 3.jpg"]
   },
   {
     "id": 6,
@@ -183,7 +183,7 @@
     "description": "Три дня без уведомлений и городской суеты — только #дикий_Байкал и шум волн.",
     "transport": "Авто + катер.",
     "tips": "Запасись водой и powerbank.",
-    "photos": ["baikal.jpg", "baikal.jpg", "baikal.jpg"]
+    "photos": ["baikal.jpg", "baikal 2.jpg", "baikal 3.jpg"]
   },
   {
     "id": 7,
@@ -210,7 +210,7 @@
     "description": "Маршрут для тех, кто хочет найти #место_силы и на день выпасть из привычного ритма.",
     "transport": "Маршрутка или автомобиль.",
     "tips": "Одежда должна быть закрытой.",
-    "photos": ["baikal.jpg", "baikal.jpg", "baikal.jpg"]
+    "photos": ["baikal.jpg", "baikal 2.jpg", "baikal 3.jpg"]
   },
   {
     "id": 8,
@@ -237,7 +237,7 @@
     "description": "Север Байкала — это свобода, пустые пляжи и бесконечный #ветер_в_лицо.",
     "transport": "Поезд или самолёт.",
     "tips": "Даже летом пригодится тёплая одежда.",
-    "photos": ["baikal.jpg", "baikal.jpg", "baikal.jpg"]
+    "photos": ["baikal.jpg", "baikal 2.jpg", "baikal 3.jpg"]
   },
   {
     "id": 9,
@@ -264,7 +264,7 @@
     "description": "Кяхта — место, где старинная архитектура встречается с атмосферой настоящего travel-фильма.",
     "transport": "Автомобиль или автобус.",
     "tips": "Возьми наличку — не везде есть терминалы.",
-    "photos": ["baikal.jpg", "baikal.jpg", "baikal.jpg"]
+    "photos": ["baikal.jpg", "baikal 2.jpg", "baikal 3.jpg"]
   },
   {
     "id": 10,
@@ -291,6 +291,6 @@
     "description": "Днём гуляешь по берегу Байкала, вечером греешься в источниках — идеальный #цифровой_детокс.",
     "transport": "Автомобиль.",
     "tips": "Лучше бронировать жильё заранее.",
-    "photos": ["baikal.jpg", "baikal.jpg", "baikal.jpg"]
+    "photos": ["baikal.jpg", "baikal 2.jpg", "baikal 3.jpg"]
   }
 ]
