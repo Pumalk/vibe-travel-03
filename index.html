@@ -6,9 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIBE TRAVEL 03 — твой гид по Бурятии</title>
     <meta name="description" content="Эмоциональный гид по Бурятии для молодёжи. Вайб-фильтры, маршруты, события.">
+    <meta property="og:title" content="VIBE TRAVEL 03 — твой гид по Бурятии">
+    <meta property="og:description" content="Эмоциональный гид по Бурятии для молодёжи. Вайб-фильтры, маршруты, события.">
+    <meta property="og:type" content="website">
+    <link rel="preload" as="image" href="assets/images/hero.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap&subset=cyrillic"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;600&display=swap&subset=cyrillic,cyrillic-ext"
         rel="stylesheet">
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='none' stroke='%23E07A5F' stroke-width='4'/><line x1='50' y1='2' x2='50' y2='98' stroke='%23E07A5F' stroke-width='4'/><line x1='2' y1='50' x2='98' y2='50' stroke='%23E07A5F' stroke-width='4'/><circle cx='50' cy='50' r='10' fill='%23E07A5F'/></svg>"
@@ -18,11 +23,13 @@
     <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+    <meta name="apple-mobile-web-app-title" content="VIBE TRAVEL 03" />
     <link rel="manifest" href="/assets/favicon/site.webmanifest" />
 </head>
 
 <body>
+    <a class="skip-link" href="#main-content">К содержимому</a>
+    <div class="nav-backdrop" id="navBackdrop" aria-hidden="true"></div>
     <div id="preloader">
         <div class="preloader-circle"></div>
         <p>Загружаем вайб...</p>
@@ -31,10 +38,13 @@
     <div id="app">
         <header class="header">
             <div class="container">
-                <a href="#/" class="logo">VIBE TRAVEL <img src="assets/images/logo_black.svg" alt="Logo"
-                        class="logo-img"></a>
-                <nav class="nav" id="mainNav">
-                    <button class="burger" id="burgerBtn" aria-label="Меню">
+                <a href="#/" class="logo" aria-label="VIBE TRAVEL — на главную">
+                    <span class="logo-text">VIBE TRAVEL</span>
+                    <img src="assets/images/logo_white.svg" alt="" class="logo-img" width="36" height="36" decoding="async" />
+                </a>
+                <nav class="nav" id="mainNav" aria-label="Основное меню">
+                    <button type="button" class="burger" id="burgerBtn" aria-label="Открыть меню"
+                        aria-expanded="false" aria-controls="navList">
                         <span></span><span></span><span></span>
                     </button>
                     <ul class="nav-list" id="navList">
@@ -46,7 +56,7 @@
                 </nav>
             </div>
         </header>
-        <main id="main-content" class="main"></main>
+        <main id="main-content" class="main" role="main" tabindex="-1" aria-live="polite"></main>
         <footer class="footer">
             <div class="container">
                 <p>&copy; 2026 VIBE TRAVEL 03. Все права защищены (но это не точно).</p>
@@ -55,21 +65,33 @@
         </footer>
     </div>
 
-    <!-- Кнопка пасхалки «Буузы» -->
-    <button id="buuza-fab" title="Покормить буузами">
-        <img src="assets/images/buuza.png" alt="Бууза" />
+    <div id="transition-mask" aria-hidden="true">
+        <div class="transition-mask__rays"></div>
+    </div>
+    <button type="button" id="buuza-fab" title="Покормить буузами" aria-label="Пасхалка: буузы">
+        <img src="assets/images/buuza.png" alt="" decoding="async" />
     </button>
 
-    <!-- Ключ API -->
     <script src="config.js"></script>
-    <!-- Основные скрипты -->
-    <script src="src/js/router.js"></script>
+    <script src="src/js/strings.js"></script>
+    <script src="src/js/app-state.js"></script>
+    <script src="src/js/favorites.js"></script>
+    <script src="src/js/tag-helpers.js"></script>
+    <script src="src/js/lazy-images.js"></script>
+    <script src="src/js/toast.js"></script>
+    <script src="src/js/meta.js"></script>
+    <script src="src/js/scroll-reveal.js"></script>
+    <script src="src/js/session-filters.js"></script>
+    <script src="src/js/data-loader.js"></script>
+    <script src="src/js/pdf-export.js"></script>
+    <script src="src/js/easter-egg-buuza.js"></script>
+    <script src="src/js/ui-nav.js"></script>
+    <script src="src/js/navigation.js"></script>
     <script src="src/js/map.js"></script>
     <script src="src/js/gallery.js"></script>
+    <script src="src/js/render-pages.js"></script>
+    <script src="src/js/router.js"></script>
     <script src="src/js/app.js"></script>
-    <!-- Библиотеки для PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 
 </html>

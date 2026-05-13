@@ -6,6 +6,28 @@
 // Флаг, загружено ли API
 let yandexReady = false;
 
+/** Опции карты: тёмная тема (поддерживается в актуальных сборках API 2.1). */
+const YMAP_OPTIONS = { theme: 'dark' };
+
+const PLACEMARK_DOT = {
+    preset: 'islands#circleDotIcon',
+    iconColor: '#E07A5F'
+};
+
+/**
+ * Создаёт карту с тёмной темой; при отсутствии поддержки — без третьего аргумента.
+ * @param {HTMLElement|string} container
+ * @param {Object} state
+ * @returns {ymaps.Map}
+ */
+function createYandexMap(container, state) {
+    try {
+        return new ymaps.Map(container, state, YMAP_OPTIONS);
+    } catch (e) {
+        return new ymaps.Map(container, state);
+    }
+}
+
 /**
  * Загружает API Яндекс.Карт, если ещё не загружено,
  * и вызывает callback после готовности.
@@ -49,14 +71,18 @@ function initPreviewMap() {
     if (!container) return;
 
     // Сообщение, если ключ не задан
-    if (typeof YANDEX_API_KEY === 'undefined' || YANDEX_API_KEY === 'твой_ключ_от_Яндекс.Карт') {
-        container.innerHTML = '<p style="text-align:center;padding:40px;">Нужно указать ключ API в config.js</p>';
+    if (
+        typeof YANDEX_API_KEY === 'undefined' ||
+        YANDEX_API_KEY === 'твой_ключ_от_Яндекс.Карт' ||
+        YANDEX_API_KEY === 'YOUR_YANDEX_MAPS_API_KEY'
+    ) {
+        container.innerHTML = `<p class="map-api-message">${typeof VIBE_STRINGS !== 'undefined' ? VIBE_STRINGS.mapNeedKey : 'Нужно указать ключ API в config.js'}</p>`;
         return;
     }
 
     loadYandexMaps(() => {
         // Центр карты – Бурятия
-        const map = new ymaps.Map(container, {
+        const map = createYandexMap(container, {
             center: [53.2, 108.0],
             zoom: 6,
             controls: ['zoomControl']
@@ -68,10 +94,7 @@ function initPreviewMap() {
         previewRoutes.forEach(route => {
             const placemark = new ymaps.Placemark(route.coords, {
                 hintContent: route.title
-            }, {
-                preset: 'islands#circleDotIcon',
-                iconColor: '#E07A5F'
-            });
+            }, PLACEMARK_DOT);
             map.geoObjects.add(placemark);
         });
     });
@@ -86,13 +109,17 @@ function initDetailMap(route) {
     const container = document.getElementById('detail-map');
     if (!container) return;
 
-    if (typeof YANDEX_API_KEY === 'undefined' || YANDEX_API_KEY === 'твой_ключ_от_Яндекс.Карт') {
-        container.innerHTML = '<p style="text-align:center;padding:40px;">Нужно указать ключ API в config.js</p>';
+    if (
+        typeof YANDEX_API_KEY === 'undefined' ||
+        YANDEX_API_KEY === 'твой_ключ_от_Яндекс.Карт' ||
+        YANDEX_API_KEY === 'YOUR_YANDEX_MAPS_API_KEY'
+    ) {
+        container.innerHTML = `<p class="map-api-message">${typeof VIBE_STRINGS !== 'undefined' ? VIBE_STRINGS.mapNeedKey : 'Нужно указать ключ API в config.js'}</p>`;
         return;
     }
 
     loadYandexMaps(() => {
-        const map = new ymaps.Map(container, {
+        const map = createYandexMap(container, {
             center: route.points[0].coords,
             zoom: 12,
             controls: ['zoomControl', 'fullscreenControl']
@@ -115,9 +142,7 @@ function initDetailMap(route) {
         route.points.forEach(point => {
             const placemark = new ymaps.Placemark(point.coords, {
                 balloonContent: `<strong>${point.name}</strong><br>${point.description}`
-            }, {
-                preset: 'islands#blueCircleDotIcon'
-            });
+            }, PLACEMARK_DOT);
             map.geoObjects.add(placemark);
         });
 
@@ -137,13 +162,17 @@ function initFullMap() {
     const container = document.getElementById('full-map');
     if (!container) return;
 
-    if (typeof YANDEX_API_KEY === 'undefined' || YANDEX_API_KEY === 'твой_ключ_от_Яндекс.Карт') {
-        container.innerHTML = '<p style="text-align:center;padding:40px;">Нужно указать ключ API в config.js</p>';
+    if (
+        typeof YANDEX_API_KEY === 'undefined' ||
+        YANDEX_API_KEY === 'твой_ключ_от_Яндекс.Карт' ||
+        YANDEX_API_KEY === 'YOUR_YANDEX_MAPS_API_KEY'
+    ) {
+        container.innerHTML = `<p class="map-api-message">${typeof VIBE_STRINGS !== 'undefined' ? VIBE_STRINGS.mapNeedKey : 'Нужно указать ключ API в config.js'}</p>`;
         return;
     }
 
     loadYandexMaps(() => {
-        const map = new ymaps.Map(container, {
+        const map = createYandexMap(container, {
             center: [53.2, 108.0],
             zoom: 6,
             controls: ['zoomControl', 'searchControl', 'typeSelector']
@@ -160,9 +189,7 @@ function initFullMap() {
             // Стартовая точка маршрута
             const pm = new ymaps.Placemark(route.coords, {
                 hintContent: route.title
-            }, {
-                preset: 'islands#orangeCircleDotIcon'
-            });
+            }, PLACEMARK_DOT);
             routesCollection.add(pm);
 
             // Разбираем точки по типам
@@ -183,24 +210,24 @@ function initFullMap() {
                     case 'вулканы':
                         sightsCollection.add(new ymaps.Placemark(point.coords, {
                             hintContent: point.name
-                        }, { preset: 'islands#greenCircleDotIcon' }));
+                        }, PLACEMARK_DOT));
                         break;
                     case 'кафе':
                         foodCollection.add(new ymaps.Placemark(point.coords, {
                             hintContent: point.name
-                        }, { preset: 'islands#brownCircleDotIcon' }));
+                        }, PLACEMARK_DOT));
                         break;
                     case 'отель':
                     case 'кемпинг':
                     case 'источник':
                         hotelsCollection.add(new ymaps.Placemark(point.coords, {
                             hintContent: point.name
-                        }, { preset: 'islands#blueCircleDotIcon' }));
+                        }, PLACEMARK_DOT));
                         break;
                     default:
                         sightsCollection.add(new ymaps.Placemark(point.coords, {
                             hintContent: point.name
-                        }, { preset: 'islands#violetCircleDotIcon' }));
+                        }, PLACEMARK_DOT));
                 }
             });
         });

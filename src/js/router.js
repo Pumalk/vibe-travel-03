@@ -47,7 +47,19 @@ class Router {
         // Если ничего не найдено — показываем 404 (пока заглушка)
         const main = document.getElementById('main-content');
         if (main) {
-            main.innerHTML = '<h2>Страница не найдена</h2><p><a href="#/">Вернуться на главную</a></p>';
+            main.innerHTML = `
+                <section class="section">
+                    <header class="section-intro reveal">
+                        <p class="section-eyebrow">404</p>
+                        <h2>Страница не найдена</h2>
+                    </header>
+                    <p class="detail-lead reveal"><a href="#/">Вернуться на главную</a></p>
+                </section>`;
+            if (typeof refreshPageReveals === 'function') refreshPageReveals();
+            if (typeof updateNavActiveState === 'function') updateNavActiveState();
+            if (typeof setPageMeta === 'function') {
+                setPageMeta({ title: 'Страница не найдена', description: VIBE_STRINGS.defaultDescription });
+            }
         }
     }
 
