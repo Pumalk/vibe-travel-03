@@ -20,6 +20,7 @@ function renderHome() {
       <div class="kinetic-bar__track">
         <span>Бурятия · Байкал · буузы · шаманский круг · степь · Улан-Удэ · дорога к солнцу · вайб · </span>
         <span>Бурятия · Байкал · буузы · шаманский круг · степь · Улан-Удэ · дорога к солнцу · вайб · </span>
+        <span>Бурятия · Байкал · буузы · шаманский круг · степь · Улан-Удэ · дорога к солнцу · вайб · </span>
       </div>
     </div>
     <section class="section">
@@ -160,21 +161,20 @@ function renderRouteDetail(id) {
         <div class="magazine-hero">
           <img data-src="assets/gallery/${route.photos[0]}" alt="${route.title}" class="gallery-image lazy" onerror="this.src='https://via.placeholder.com/600x400?text=Фото'">
         </div>
-        ${
-          route.photos.length > 1
-            ? `
+        ${route.photos.length > 1
+      ? `
         <div class="magazine-side">
           ${route.photos
-            .slice(1, 3)
-            .map(
-              (p) => `
+        .slice(1, 3)
+        .map(
+          (p) => `
             <img data-src="assets/gallery/${p}" alt="${route.title}" class="gallery-image lazy" onerror="this.src='https://via.placeholder.com/300x200?text=Фото'">
           `
-            )
-            .join('')}
+        )
+        .join('')}
         </div>`
-            : ''
-        }
+      : ''
+    }
       </div>
 
       <h3 class="reveal">📍 Точки маршрута</h3>
@@ -206,7 +206,7 @@ function renderRouteDetail(id) {
           text: route.description,
           url: url
         })
-        .catch(() => {});
+        .catch(() => { });
     } else {
       navigator.clipboard.writeText(url).then(() => {
         showToast(VIBE_STRINGS.linkCopied);
@@ -257,8 +257,8 @@ function renderEvents() {
       ${sectionIntro('Афиша', '📅 Ближайшие события')}
       <div class="cards-grid centered">
         ${appData.events
-          .map(
-            (e) => `
+      .map(
+        (e) => `
           <div class="card event-card reveal">
             <img data-src="assets/events/${e.photo}" alt="${e.name}" class="event-photo lazy" onerror="this.style.display='none'">
             <div class="card-content">
@@ -269,8 +269,8 @@ function renderEvents() {
             </div>
           </div>
         `
-          )
-          .join('')}
+      )
+      .join('')}
       </div>
     </section>
   `;
