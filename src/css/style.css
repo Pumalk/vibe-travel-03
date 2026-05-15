@@ -146,11 +146,14 @@ body.fade-out {
   transition:
     opacity 0.2s ease,
     visibility 0.2s ease;
+  background-color: rgba(10, 17, 40, 0.92); /* ← добавить: тёмный фон с затемнением */
+  backdrop-filter: blur(4px); /* опционально: лёгкий блюр */
 }
 
 #transition-mask.active {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 
 .transition-mask__rays {
