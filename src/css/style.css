@@ -272,6 +272,21 @@ body.fade-out {
   flex: 1 0 auto;
 }
 
+/* Стили для текстовых ссылок внутри контента */
+#main-content a:not(.btn):not(.nav-link):not(.btn-outline) {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+#main-content a:not(.btn):not(.nav-link):not(.btn-outline):hover {
+  color: var(--color-primary-hover);
+}
+
+#main-content a:not(.btn):not(.nav-link):not(.btn-outline):active {
+  color: #b04a32;
+}
+
 /* Появление контента после смены маршрута */
 .main.page-enter {
   animation: main-page-in 0.55s var(--ease-out-expo) both;

@@ -138,7 +138,7 @@ function renderRouteDetail(id) {
     main.innerHTML = `
       <section class="section">
         <h2>${VIBE_STRINGS.routeNotFound}</h2>
-        <p class="detail-lead"><a href="#/routes">Ко всем маршрутам</a></p>
+        <p class="detail-lead"><a href="#/routes">⬅ Ко всем маршрутам</a></p>
       </section>`;
     setPageMeta({ title: VIBE_STRINGS.routeNotFound });
     return;

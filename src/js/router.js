@@ -53,7 +53,7 @@ class Router {
                         <p class="section-eyebrow">404</p>
                         <h2>Страница не найдена</h2>
                     </header>
-                    <p class="detail-lead reveal"><a href="#/">Вернуться на главную</a></p>
+                    <p class="detail-lead reveal"><a href="#/">⬅ Вернуться на главную</a></p>
                 </section>`;
             if (typeof refreshPageReveals === 'function') refreshPageReveals();
             if (typeof updateNavActiveState === 'function') updateNavActiveState();
