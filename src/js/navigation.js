@@ -64,3 +64,17 @@ async function navigateTo(renderFn, params) {
   triggerPageEnterAnimation();
   requestAnimationFrame(() => refreshPageReveals());
 }
+
+function initSkipLink() {
+  const skipLink = document.querySelector('.skip-link');
+  if (!skipLink) return;
+
+  skipLink.addEventListener('click', (e) => {
+    e.preventDefault(); // предотвращаем переход по #main-content
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) {
+      mainContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      mainContent.focus({ preventScroll: true });
+    }
+  });
+}

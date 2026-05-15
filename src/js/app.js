@@ -8,6 +8,7 @@ async function initApp() {
 
   const headerEl = document.querySelector('.header');
   initNavChrome(headerEl);
+  initSkipLink();
 
   const dataOk = await loadData();
   if (!dataOk) {
