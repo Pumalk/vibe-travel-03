@@ -836,6 +836,7 @@ body.nav-drawer-open {
     border-color 0.35s ease;
   display: flex;
   flex-direction: column;
+  color: var(--color-text);
 }
 
 .card::before {
@@ -860,11 +861,6 @@ body.nav-drawer-open {
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
   border-color: rgba(224, 122, 95, 0.28);
 }
-
-.card-dark {
-  color: var(--color-text);
-}
-
 
 .card-content {
   position: relative;

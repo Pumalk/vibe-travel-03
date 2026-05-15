@@ -24,7 +24,7 @@ function renderRouteCard(route) {
   const tagNames = route.tags.map((t) => tagLabels[t] || t).join(' · ');
 
   return `
-    <div class="card" style="background: var(--color-surface)">
+    <div class="card reveal" style="background: var(--color-surface)">
       <div class="card-content">
         <h3>${route.title}</h3>
         <p>${tagNames}</p>
