@@ -973,7 +973,6 @@ body.nav-drawer-open {
   font-family: inherit;
 }
 
-.chip:hover,
 .chip.active {
   background: var(--color-primary);
   color: var(--color-text);
@@ -987,6 +986,10 @@ body.nav-drawer-open {
 
 .chip:active {
   transform: scale(0.97);
+}
+
+.chip:focus {
+  outline: none;
 }
 
 .filter-select {

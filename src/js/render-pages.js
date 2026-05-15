@@ -93,6 +93,7 @@ function setupFilters() {
     chip.addEventListener('click', function () {
       this.classList.toggle('active');
       updateRoutesGrid();
+      this.blur(); // снимаем фокус, чтобы на мобильных убрать активное состояние
     });
   });
 
