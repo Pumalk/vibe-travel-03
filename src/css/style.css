@@ -763,6 +763,20 @@ body.nav-drawer-open {
   transition-delay: 0.32s;
 }
 
+/* Центрирование топ-подборки на главной */
+#home-top-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+#home-top-grid .card {
+  width: 340px;
+  max-width: 100%;
+  flex: 0 0 auto;
+}
+
 .cards-grid.centered .card.reveal.is-visible:nth-child(1) {
   transition-delay: 0.04s;
 }
@@ -1415,6 +1429,11 @@ body.nav-drawer-open {
 
   .magazine-side img:only-child {
     height: 240px;
+  }
+
+  #home-top-grid .card {
+    width: calc(100% - 2rem);
+    max-width: 400px;
   }
 }
 
