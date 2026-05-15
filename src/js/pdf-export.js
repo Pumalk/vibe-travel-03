@@ -55,8 +55,9 @@ async function downloadPDF(route) {
   pdfDiv.style.color = '#EDF2F4';
 
   pdfDiv.innerHTML = `
-    <div style="background:#0A1128; padding:22px 24px; margin:-30px -30px 24px -30px; border-bottom:2px solid #E07A5F;">
-      <span style="color:#EDF2F4; font-family:'Playfair Display', Georgia, serif; font-size:24px; font-weight:900; letter-spacing:0.04em;">VIBE TRAVEL 03</span>
+    <div style="background:#0A1128; padding:22px 24px; margin:-30px -30px 24px -30px; border-bottom:2px solid #E07A5F; display: flex; align-items: center; gap: 6px;">
+      <span style="color:#EDF2F4; font-family:'Playfair Display', Georgia, serif; font-size:24px; font-weight:900; letter-spacing:0.04em;">VIBE TRAVEL</span>
+      <img src="assets/images/logo_white.svg" alt="логотип" style="height: 30px; width: auto;">
     </div>
     <h1 style="font-family:'Playfair Display', Georgia, serif; font-weight:900; font-size:28px; margin-top:0; color:#EDF2F4;">${route.title}</h1>
     <p style="color:#8D99AE; font-size:14px;">
@@ -70,16 +71,16 @@ async function downloadPDF(route) {
     <h3 style="font-family:'Playfair Display', Georgia, serif; font-weight:700; color:#C4A57B;">📍 Точки и координаты</h3>
     <ul style="list-style:none; padding-left:0;">
       ${route.points
-        .map(
-          (p, i) => `
+      .map(
+        (p, i) => `
         <li style="margin-bottom:10px; font-size:14px; color:#EDF2F4;">
           <strong>${i + 1}. ${p.name} (${p.type})</strong><br>
           ${p.description}<br>
           <span style="color:#8D99AE;">Координаты: ${p.coords.join(', ')}</span>
         </li>
       `
-        )
-        .join('')}
+      )
+      .join('')}
     </ul>
     <hr style="margin-top:30px; border:none; border-top:1px solid #8D99AE; opacity:0.35;">
     <p style="text-align:center; color:#8D99AE; font-size:12px;">Этот гид создан VIBE TRAVEL 03 · Сохрани и путешествуй!</p>
