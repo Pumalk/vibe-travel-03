@@ -16,7 +16,7 @@ function spawnBuuza() {
   const count = Math.floor(Math.random() * 11) + 10;
   for (let i = 0; i < count; i++) {
     const img = document.createElement('img');
-    img.src = 'assets/images/buuza.png';
+    img.src = 'assets/images/buuza.webp';
     img.className = 'falling-buuza';
     img.style.left = Math.random() * 90 + 5 + '%';
     const duration = Math.random() * 2 + 2;
