@@ -479,7 +479,7 @@ body.nav-drawer-open {
   overflow: hidden;
   margin: -60px 0 0;
   width: 100%;
-  max-width: 100%;     
+  max-width: 100%;
 }
 
 .hero-overlay {
@@ -669,7 +669,7 @@ body.nav-drawer-open {
 .kinetic-bar__track {
   display: flex;
   width: max-content;
-  animation: kinetic-scroll 38s linear infinite;
+  animation: kinetic-scroll 40s linear infinite;
   will-change: transform;
 }
 
