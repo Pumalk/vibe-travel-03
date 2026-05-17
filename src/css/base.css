@@ -221,7 +221,7 @@ body.fade-out {
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 0.5rem;
+  gap: 0.3rem;
   align-items: center;
 }
 
@@ -235,7 +235,7 @@ body.fade-out {
   font-size: 0.9rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  padding: 0.5rem 1rem;
+    padding: 0.4rem 0.8rem;
   border-radius: 10px;
   background: rgba(237, 242, 244, 0.08);
   border: 1px solid rgba(237, 242, 244, 0.14);

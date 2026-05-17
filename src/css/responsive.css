@@ -1,5 +1,5 @@
-/* === ПЛАНШЕТ (max-width: 768px) === */
-@media (max-width: 768px) {
+/* === ПЛАНШЕТ / МАЛЕНЬКИЙ ДЕСКТОП (max-width: 900px) === */
+@media (max-width: 900px) {
   .hero {
     background-attachment: scroll;
   }
@@ -12,6 +12,7 @@
   .cards-grid:not(.centered) {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .burger {
     display: flex;
   }
