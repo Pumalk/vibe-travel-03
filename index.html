@@ -26,7 +26,7 @@
     <meta name="twitter:description" content="Эмоциональный гид по Бурятии">
     <meta name="twitter:image" content="https://pumalk.github.io/vibe-travel-03/assets/images/logo_white.svg">
 
-    <link rel="preload" as="image" href="assets/images/hero.webp">
+    <link rel="preload" as="image" href="assets/images/hero.webp" fetchpriority="high">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Асинхронная загрузка шрифтов без блокировки рендеринга -->
@@ -41,13 +41,236 @@
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='none' stroke='%23E07A5F' stroke-width='4'/><line x1='50' y1='2' x2='50' y2='98' stroke='%23E07A5F' stroke-width='4'/><line x1='2' y1='50' x2='98' y2='50' stroke='%23E07A5F' stroke-width='4'/><circle cx='50' cy='50' r='10' fill='%23E07A5F'/></svg>"
         type="image/svg+xml">
-    <link rel="stylesheet" href="src/css/style.css">
+    <link rel="preload" as="style" href="src/css/style.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="src/css/style.css">
+    </noscript>
     <link rel="icon" type="image/png" href="assets/favicon/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg" />
     <link rel="shortcut icon" href="assets/favicon/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="VIBE TRAVEL 03" />
     <link rel="manifest" href="assets/favicon/site.webmanifest" />
+
+    <style>
+        /* === КРИТИЧЕСКИЙ CSS === */
+        :root {
+            --color-bg: #0a1128;
+            --color-surface: #141b33;
+            --color-text: #edf2f4;
+            --color-text-muted: #8d99ae;
+            --color-primary: #e07a5f;
+            --color-primary-hover: #c05a42;
+            --color-secondary: #5a7d6c;
+            --color-accent-sand: #a38560;
+            --font-display: "Playfair Display", serif;
+            --font-body: "Inter", sans-serif;
+            --transition: 0.25s ease-in-out;
+            --max-width: 1200px;
+            --border-radius: 12px;
+            --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+            --ease-drawer: cubic-bezier(0.4, 0, 0.2, 1);
+            --reveal-duration: 0.75s;
+            --reveal-shift: 28px
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 3px
+        }
+
+        :focus:not(:focus-visible) {
+            outline: none
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--color-primary) var(--color-bg)
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            transition: opacity 0.3s ease;
+            opacity: 1
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            opacity: 0.07;
+            background-image: url("assets/images/left up.svg"), url("assets/images/right up.svg"), url("assets/images/left down.svg"), url("assets/images/right down.svg");
+            background-position: left top, right top, left bottom, right bottom;
+            background-size: 160px 160px;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            filter: invert(1)
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay
+        }
+
+        .header {
+            background: transparent;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            transition: background 0.3s ease, backdrop-filter 0.3s ease
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1rem
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px
+        }
+
+        #app {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-top: 60px
+        }
+
+        #main-content {
+            flex: 1 0 auto
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--color-text);
+            text-decoration: none;
+            letter-spacing: 0.02em
+        }
+
+        .logo-img {
+            height: 1.75rem;
+            width: auto;
+            display: block;
+            flex-shrink: 0;
+            object-fit: contain
+        }
+
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 420px;
+            display: flex;
+            align-items: center;
+            background: url("assets/images/hero.webp") center/cover no-repeat;
+            background-attachment: fixed;
+            overflow: hidden;
+            margin: -60px 0 0;
+            width: 100%;
+            max-width: 100%
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, var(--color-bg) 0%, rgba(10, 17, 40, 0.4) 60%)
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            margin-left: 10%;
+            padding: 1rem 1rem 1rem 0
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 5.5rem;
+            line-height: 1;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin: 0 0 0.5rem;
+            color: var(--color-text)
+        }
+
+        .hero-content p {
+            font-size: 1.4rem;
+            color: var(--color-text-muted);
+            margin: 0 0 2rem
+        }
+
+        .btn-outline {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border: 2px solid var(--color-primary);
+            border-radius: 0;
+            background: transparent;
+            color: var(--color-primary);
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: background var(--transition), color var(--transition), border-color var(--transition), transform 0.2s var(--ease-out-expo), box-shadow 0.25s ease
+        }
+
+        body.fade-out {
+            opacity: 0
+        }
+
+        .section-intro {
+            margin-bottom: 1.75rem
+        }
+
+        .section-intro h2 {
+            margin-bottom: 0
+        }
+
+        .section-eyebrow {
+            font-family: var(--font-body);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--color-primary);
+            margin: 0 0 0.5rem;
+            opacity: 0.95
+        }
+    </style>
 </head>
 
 <body>
