@@ -13,15 +13,23 @@ function initBuuzaEasterEgg() {
 }
 
 function spawnBuuza() {
+  // Получаем реальную высоту видимой области (iPhone-friendly)
+  const viewportHeight = window.visualViewport 
+    ? window.visualViewport.height 
+    : window.innerHeight;
+  const endTop = viewportHeight - 70; // отступ от нижнего края
+
   const count = Math.floor(Math.random() * 11) + 10;
   for (let i = 0; i < count; i++) {
     const img = document.createElement('img');
     img.src = 'assets/images/buuza.webp';
     img.className = 'falling-buuza';
     img.style.left = Math.random() * 90 + 5 + '%';
+    // Устанавливаем CSS-переменную для конечной позиции
+    img.style.setProperty('--end-top', endTop + 'px');
     const duration = Math.random() * 2 + 2;
-    img.style.animationDuration = `${duration}s`;
-    img.style.animationDelay = `${Math.random() * 0.5}s`;
+    img.style.animationDuration = duration + 's';
+    img.style.animationDelay = Math.random() * 0.5 + 's';
     document.body.appendChild(img);
 
     img.addEventListener('click', (e) => {
@@ -37,13 +45,7 @@ function spawnBuuza() {
       }
     }, 60000);
 
-    img.addEventListener(
-      'click',
-      () => {
-        clearTimeout(autoRemoveTimer);
-      },
-      { once: true }
-    );
+    img.addEventListener('click', () => clearTimeout(autoRemoveTimer), { once: true });
 
     const allBuuz = document.querySelectorAll('.falling-buuza');
     if (allBuuz.length > 30) {

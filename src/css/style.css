@@ -1322,7 +1322,7 @@ body.nav-drawer-open {
 
 @keyframes fall {
   to {
-    top: calc(100vh - 60px);
+    top: var(--end-top);
     transform: rotate(360deg);
   }
 }
