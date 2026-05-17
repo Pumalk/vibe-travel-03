@@ -712,50 +712,22 @@ body.nav-drawer-open {
 .reveal {
   opacity: 0;
   transform: translate3d(0, var(--reveal-shift), 0);
-  transition:
-    opacity var(--reveal-duration) var(--ease-out-expo),
-    transform var(--reveal-duration) var(--ease-out-expo);
-  will-change: opacity, transform;
+  transition: none; /* убираем transition, будем использовать animation */
 }
 
 .reveal.is-visible {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  will-change: auto;
+  animation: fadeInUp 0.75s var(--ease-out-expo) forwards;
 }
 
-.card.reveal {
-  transition-delay: 0s;
-}
-
-#routes-grid .card.reveal.is-visible:nth-child(1),
-#home-top-grid .card.reveal.is-visible:nth-child(1) {
-  transition-delay: 0.02s;
-}
-
-#routes-grid .card.reveal.is-visible:nth-child(2),
-#home-top-grid .card.reveal.is-visible:nth-child(2) {
-  transition-delay: 0.08s;
-}
-
-#routes-grid .card.reveal.is-visible:nth-child(3),
-#home-top-grid .card.reveal.is-visible:nth-child(3) {
-  transition-delay: 0.14s;
-}
-
-#routes-grid .card.reveal.is-visible:nth-child(4),
-#home-top-grid .card.reveal.is-visible:nth-child(4) {
-  transition-delay: 0.2s;
-}
-
-#routes-grid .card.reveal.is-visible:nth-child(5),
-#home-top-grid .card.reveal.is-visible:nth-child(5) {
-  transition-delay: 0.26s;
-}
-
-#routes-grid .card.reveal.is-visible:nth-child(6),
-#home-top-grid .card.reveal.is-visible:nth-child(6) {
-  transition-delay: 0.32s;
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 /* Центрирование топ-подборки на главной */

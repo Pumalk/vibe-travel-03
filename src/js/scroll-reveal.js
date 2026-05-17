@@ -34,14 +34,24 @@ function observeReveal(el) {
 function refreshPageReveals() {
   const root = document.getElementById('main-content');
   if (!root) return;
-  root.querySelectorAll('.reveal').forEach((el) => {
-    if (el.classList.contains('card') && el.closest('#routes-grid')) return;
-    observeReveal(el);
-  });
+  root.querySelectorAll('.reveal').forEach((el) => observeReveal(el));
 }
 
 function bindRoutesGridReveals() {
   const grid = document.getElementById('routes-grid');
   if (!grid) return;
-  grid.querySelectorAll('.card.reveal').forEach((card) => observeReveal(card));
+  const cards = grid.querySelectorAll('.card.reveal');
+  cards.forEach((card, index) => {
+    // Сбрасываем анимацию
+    card.classList.remove('is-visible');
+    void card.offsetHeight; // reflow
+    // Задаём задержку на основе индекса
+    card.style.animationDelay = (index * 60) + 'ms';
+    // Подключаем Observer (или сразу запускаем, если Observer не используется)
+    if (scrollRevealObserver) {
+      scrollRevealObserver.observe(card);
+    } else {
+      card.classList.add('is-visible');
+    }
+  });
 }
