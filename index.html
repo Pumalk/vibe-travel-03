@@ -10,7 +10,8 @@
     <!-- Open Graph для соцсетей -->
     <meta name="description" content="Эмоциональный гид по Бурятии для молодёжи. Вайб-фильтры, маршруты, события.">
     <meta property="og:title" content="VIBE TRAVEL 03 — твой гид по Бурятии">
-    <meta property="og:description" content="Эмоциональный гид по Бурятии для молодёжи. Вайб-фильтры, маршруты, события.">
+    <meta property="og:description"
+        content="Эмоциональный гид по Бурятии для молодёжи. Вайб-фильтры, маршруты, события.">
     <meta property="og:image" content="https://pumalk.github.io/vibe-travel-03/assets/images/logo_white.svg">
     <meta property="og:image:type" content="image/svg+xml">
     <meta property="og:image:width" content="512">
@@ -24,13 +25,19 @@
     <meta name="twitter:title" content="VIBE TRAVEL — гид по Бурятии">
     <meta name="twitter:description" content="Эмоциональный гид по Бурятии">
     <meta name="twitter:image" content="https://pumalk.github.io/vibe-travel-03/assets/images/logo_white.svg">
-    
+
     <link rel="preload" as="image" href="assets/images/hero.webp">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
+    <!-- Асинхронная загрузка шрифтов без блокировки рендеринга -->
+    <link rel="preload" as="style"
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;600&display=swap&subset=cyrillic,cyrillic-ext"
-        rel="stylesheet">
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;600&display=swap&subset=cyrillic,cyrillic-ext"
+            rel="stylesheet">
+    </noscript>
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='none' stroke='%23E07A5F' stroke-width='4'/><line x1='50' y1='2' x2='50' y2='98' stroke='%23E07A5F' stroke-width='4'/><line x1='2' y1='50' x2='98' y2='50' stroke='%23E07A5F' stroke-width='4'/><circle cx='50' cy='50' r='10' fill='%23E07A5F'/></svg>"
         type="image/svg+xml">
