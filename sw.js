@@ -3,7 +3,7 @@
  * Стратегия: cache-first при повторных визитах, сеть при первом.
  */
 
-const CACHE_VERSION = 'vibe-travel-v1.0.3'; // меняй версию при обновлении ресурсов
+const CACHE_VERSION = 'vibe-travel-v1.0.4'; // меняй версию при обновлении ресурсов
 const CACHE_NAME = `static-${CACHE_VERSION}`;
 
 // Ресурсы, которые нужно закешировать при установке
