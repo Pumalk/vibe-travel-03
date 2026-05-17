@@ -1,0 +1,202 @@
+/* === ЛЕЙАУТ === */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  background: url("../../assets/images/hero.webp") center/cover no-repeat;
+  background-attachment: fixed;
+  overflow: hidden;
+  margin: -60px 0 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    var(--color-bg) 0%,
+    rgba(10, 17, 40, 0.4) 60%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  margin-left: 10%;
+  padding: 1rem 1rem 1rem 0;
+}
+
+.hero-content h1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 5.5rem;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem;
+  color: var(--color-text);
+}
+
+.hero-content p {
+  font-size: 1.4rem;
+  color: var(--color-text-muted);
+  margin: 0 0 2rem;
+}
+
+/* Секции */
+.section {
+  padding: 3rem 1rem;
+}
+
+.section h2 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem;
+  color: var(--color-accent-sand);
+  letter-spacing: 0.02em;
+}
+
+.section-intro {
+  margin-bottom: 1.75rem;
+}
+.section-intro h2 {
+  margin-bottom: 0;
+}
+
+.section-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin: 0 0 0.5rem;
+  opacity: 0.95;
+}
+
+.section h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-accent-sand);
+  margin: 0;
+}
+
+.section > ul {
+  color: var(--color-text-muted);
+  margin: 0.5rem 0 1rem;
+  padding-left: 1.35rem;
+  max-width: 65ch;
+}
+
+.section > ul li {
+  margin-bottom: 0.4rem;
+}
+
+.detail-stack {
+  margin-bottom: 0.25rem;
+}
+.detail-stack p {
+  margin: 0.35rem 0 0.65rem;
+  color: var(--color-text-muted);
+}
+.detail-stack strong {
+  color: var(--color-text);
+}
+
+/* Карта */
+.map-preview {
+  height: 300px;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  background: var(--color-surface);
+}
+
+.map-full,
+.map-detail {
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  background: var(--color-surface);
+}
+
+.map-full {
+  height: 500px;
+}
+.map-detail {
+  height: 350px;
+  margin-top: 1rem;
+}
+
+/* Сетки карточек */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.cards-grid.centered {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.cards-grid.centered .card {
+  width: 300px;
+  flex: 0 0 auto;
+}
+
+#home-top-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+#home-top-grid .card {
+  width: 340px;
+  max-width: 100%;
+  flex: 0 0 auto;
+}
+
+/* Kinetic bar */
+.kinetic-bar {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  overflow: hidden;
+  border-block: 1px solid rgba(224, 122, 95, 0.22);
+  background: linear-gradient(
+    90deg,
+    rgba(20, 27, 51, 0.95),
+    rgba(10, 17, 40, 0.98)
+  );
+  padding: 0.65rem 0;
+}
+
+.kinetic-bar__track {
+  display: flex;
+  width: max-content;
+  animation: kinetic-scroll 40s linear infinite;
+  will-change: transform;
+}
+
+.kinetic-bar__track span {
+  flex-shrink: 0;
+  padding-right: 3rem;
+  font-family: var(--font-display);
+  font-size: clamp(0.85rem, 1.8vw, 1rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(237, 242, 244, 0.55);
+  white-space: nowrap;
+}

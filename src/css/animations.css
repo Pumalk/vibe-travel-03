@@ -1,0 +1,162 @@
+/* === АНИМАЦИИ === */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes main-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.main.page-enter {
+  animation: main-page-in 0.55s var(--ease-out-expo) both;
+}
+
+/* Маска перехода */
+#transition-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+  background-color: rgba(10, 17, 40, 0.92);
+  backdrop-filter: blur(4px);
+}
+
+#transition-mask.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.transition-mask__rays {
+  width: min(200vmax, 200vmax);
+  height: min(200vmax, 200vmax);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0.45;
+  background: repeating-conic-gradient(
+    from 0deg at 50% 50%,
+    var(--color-primary) 0deg 5deg,
+    transparent 5deg 10deg
+  );
+  will-change: transform;
+}
+
+#transition-mask.active .transition-mask__rays {
+  animation: transition-mask-expand 0.48s var(--ease-drawer) forwards;
+}
+
+#transition-mask:not(.active) .transition-mask__rays {
+  transform: scale(0);
+  animation: none;
+}
+
+@keyframes transition-mask-expand {
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Hero-анимации */
+.hero-shimmer {
+  position: absolute;
+  inset: -20%;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse 80% 50% at 50% 40%,
+    rgba(224, 122, 95, 0.12) 0%,
+    transparent 55%
+  );
+  animation: hero-shimmer-drift 14s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes hero-shimmer-drift {
+  0% {
+    transform: translate(-4%, -2%) scale(1);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(5%, 3%) scale(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes hero-line-in {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-content h1 {
+  animation: hero-line-in 0.95s var(--ease-out-expo) 0.12s both;
+}
+
+.hero-content p {
+  animation: hero-line-in 0.88s var(--ease-out-expo) 0.3s both;
+}
+
+.btn-outline {
+  animation: hero-line-in 0.82s var(--ease-out-expo) 0.46s both;
+}
+
+/* Kinetic scroll */
+@keyframes kinetic-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Scroll reveal */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-shift), 0);
+  transition: none;
+}
+
+.reveal.is-visible {
+  animation: fadeInUp 0.75s var(--ease-out-expo) forwards;
+}
+
+/* Падающие буузы */
+@keyframes fall {
+  to {
+    top: var(--end-top);
+    transform: rotate(360deg);
+  }
+}

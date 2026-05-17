@@ -1,0 +1,35 @@
+/* === ПЕРЕМЕННЫЕ И СБРОСЫ === */
+:root {
+  --color-bg: #0a1128;
+  --color-surface: #141b33;
+  --color-text: #edf2f4;
+  --color-text-muted: #8d99ae;
+  --color-primary: #e07a5f;
+  --color-primary-hover: #c05a42;
+  --color-secondary: #5a7d6c;
+  --color-accent-sand: #a38560;
+  --font-display: "Playfair Display", serif;
+  --font-body: "Inter", sans-serif;
+  --transition: 0.25s ease-in-out;
+  --max-width: 1200px;
+  --border-radius: 12px;
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-drawer: cubic-bezier(0.4, 0, 0.2, 1);
+  --reveal-duration: 0.75s;
+  --reveal-shift: 28px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
