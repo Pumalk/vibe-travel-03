@@ -27,6 +27,8 @@ async function initApp() {
     '/favorites': () => navigateTo(renderFavorites)
   });
 
+  hasCompletedFirstNavigation = true; // чтобы маска не срабатывала при первом заходе
+
   router.resolve();
 
   preloader.classList.add('hidden');
