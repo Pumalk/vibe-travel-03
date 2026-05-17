@@ -29,7 +29,7 @@ function renderRouteCard(route) {
         <h3>${route.title}</h3>
         <p>${tagNames}</p>
         <p>${route.duration} · ${route.budget}</p>
-        <a href="#/routes/${route.id}" class="btn">Подробнее</a>
+        <a href="#/routes/${route.id}" class="btn" aria-label="Подробнее о маршруте «${route.title}»">Подробнее</a>
       </div>
     </div>
   `;
