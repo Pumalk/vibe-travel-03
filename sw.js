@@ -1,9 +1,9 @@
 /**
 Service Worker для кеширования статики VIBE TRAVEL 03.
 Стратегия: cache-first при повторных визитах, сеть при первом.
+*/
 
-
-const CACHE_VERSION = 'vibe-travel-v1.0.1'; // !!!МЕНЯЙ ВЕРСИЮ ПРИ ОБНОВЛЕНИИ РЕСУРСОВ!!!
+const CACHE_VERSION = 'vibe-travel-v1.0.2'; // !!!МЕНЯЙ ВЕРСИЮ ПРИ ОБНОВЛЕНИИ РЕСУРСОВ!!!
 const CACHE_NAME = `static-${CACHE_VERSION}`;
 
 // Ресурсы, которые нужно закешировать при установке
@@ -77,4 +77,4 @@ self.addEventListener('fetch', event => {
             });
         })
     );
-}); */
+}); 
