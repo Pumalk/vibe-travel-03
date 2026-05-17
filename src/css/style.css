@@ -699,13 +699,8 @@ body.nav-drawer-open {
 }
 
 @keyframes kinetic-scroll {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 /* Scroll reveal — появление при скролле */
