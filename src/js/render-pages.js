@@ -90,6 +90,7 @@ function renderRoutes() {
   updateRoutesGrid();
   observeLazyImages();
   setPageMeta({ title: 'Все маршруты' });
+  initCustomSelects();
 }
 
 function setupFilters() {

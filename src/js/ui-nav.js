@@ -38,6 +38,13 @@ function setNavDrawerOpen(open) {
   const burger = document.getElementById('burgerBtn');
   const backdrop = document.getElementById('navBackdrop');
   if (!navList || !burger) return;
+
+  if (open) {
+    // Закрываем все открытые выпадающие списки фильтров
+    document.querySelectorAll('.custom-select__dropdown.open').forEach(d => d.classList.remove('open'));
+    document.querySelectorAll('.custom-select__button.open').forEach(b => b.classList.remove('open'));
+  }
+
   navList.classList.toggle('active', open);
   burger.classList.toggle('is-open', open);
   burger.setAttribute('aria-expanded', open ? 'true' : 'false');
