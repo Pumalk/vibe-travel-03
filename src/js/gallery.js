@@ -76,8 +76,8 @@ function initGallery(containerSelector) {
     lightbox.className = 'lightbox';
     lightbox.innerHTML = `
       <button type="button" class="lightbox-close" aria-label="Закрыть"></button>
-      <button type="button" class="lightbox-nav lightbox-nav--prev" aria-label="Предыдущее фото"></button>
-      <button type="button" class="lightbox-nav lightbox-nav--next" aria-label="Следующее фото"></button>
+      <button type="button" class="lightbox-nav lightbox-nav--prev" aria-label="Предыдущее фото" tabindex="-1"></button>
+      <button type="button" class="lightbox-nav lightbox-nav--next" aria-label="Следующее фото" tabindex="-1"></button>
       <img class="lightbox-img" src="" alt="">
     `;
     document.body.appendChild(lightbox);

@@ -1163,7 +1163,16 @@ body.nav-drawer-open {
     border-color 0.2s ease;
 }
 
-.lightbox-nav:hover {
+/* Hover только для устройств с мышью */
+@media (hover: hover) {
+  .lightbox-nav:hover {
+    background: rgba(224, 122, 95, 0.35);
+    border-color: var(--color-primary);
+  }
+}
+
+/* Мгновенная реакция на касание (не залипает) */
+.lightbox-nav:active {
   background: rgba(224, 122, 95, 0.35);
   border-color: var(--color-primary);
 }
