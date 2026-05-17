@@ -1,16 +1,26 @@
 /**
-Service Worker для кеширования статики VIBE TRAVEL 03.
-Стратегия: cache-first при повторных визитах, сеть при первом.
-*/
+ * Service Worker для кеширования статики VIBE TRAVEL 03.
+ * Стратегия: cache-first при повторных визитах, сеть при первом.
+ */
 
-const CACHE_VERSION = 'vibe-travel-v1.0.2'; // !!!МЕНЯЙ ВЕРСИЮ ПРИ ОБНОВЛЕНИИ РЕСУРСОВ!!!
+const CACHE_VERSION = 'vibe-travel-v1.0.2'; // меняй версию при обновлении ресурсов
 const CACHE_NAME = `static-${CACHE_VERSION}`;
 
 // Ресурсы, которые нужно закешировать при установке
 const PRECACHE_ASSETS = [
-    '/vibe-travel-03/',                         // главная страница (SPA)
+    '/vibe-travel-03/',
     '/vibe-travel-03/index.html',
+
+    // CSS (модульная структура)
     '/vibe-travel-03/src/css/style.css',
+    '/vibe-travel-03/src/css/variables.css',
+    '/vibe-travel-03/src/css/base.css',
+    '/vibe-travel-03/src/css/animations.css',
+    '/vibe-travel-03/src/css/components.css',
+    '/vibe-travel-03/src/css/layout.css',
+    '/vibe-travel-03/src/css/responsive.css',
+
+    // JS
     '/vibe-travel-03/src/js/strings.js',
     '/vibe-travel-03/src/js/app-state.js',
     '/vibe-travel-03/src/js/favorites.js',
@@ -21,19 +31,35 @@ const PRECACHE_ASSETS = [
     '/vibe-travel-03/src/js/scroll-reveal.js',
     '/vibe-travel-03/src/js/session-filters.js',
     '/vibe-travel-03/src/js/data-loader.js',
+    '/vibe-travel-03/src/js/pdf-export-loader.js',
     '/vibe-travel-03/src/js/pdf-export.js',
     '/vibe-travel-03/src/js/easter-egg-buuza.js',
     '/vibe-travel-03/src/js/ui-nav.js',
     '/vibe-travel-03/src/js/navigation.js',
+    '/vibe-travel-03/src/js/map-loader.js',
     '/vibe-travel-03/src/js/map.js',
+    '/vibe-travel-03/src/js/dropdown.js',
     '/vibe-travel-03/src/js/gallery.js',
     '/vibe-travel-03/src/js/render-pages.js',
     '/vibe-travel-03/src/js/router.js',
     '/vibe-travel-03/src/js/app.js',
+
+    // Изображения
     '/vibe-travel-03/assets/images/hero.webp',
     '/vibe-travel-03/assets/images/buuza.webp',
     '/vibe-travel-03/assets/images/logo_white.svg',
-    '/vibe-travel-03/assets/images/logo_black.svg'
+    '/vibe-travel-03/assets/images/logo_black.svg',
+    '/vibe-travel-03/assets/images/left up.svg',
+    '/vibe-travel-03/assets/images/right up.svg',
+    '/vibe-travel-03/assets/images/left down.svg',
+    '/vibe-travel-03/assets/images/right down.svg',
+
+    // Favicon
+    '/vibe-travel-03/assets/favicon/favicon-96x96.png',
+    '/vibe-travel-03/assets/favicon/favicon.svg',
+    '/vibe-travel-03/assets/favicon/favicon.ico',
+    '/vibe-travel-03/assets/favicon/apple-touch-icon.png',
+    '/vibe-travel-03/assets/favicon/site.webmanifest'
 ];
 
 // Установка: кешируем основные ресурсы
@@ -46,7 +72,6 @@ self.addEventListener('install', event => {
             });
         })
     );
-    // Активируем новый SW сразу, не дожидаясь закрытия старых вкладок
     self.skipWaiting();
 });
 
@@ -59,22 +84,18 @@ self.addEventListener('activate', event => {
             );
         })
     );
-    // Забираем контроль над всеми страницами без перезагрузки
     self.clients.claim();
 });
 
 // Обработка запросов: сначала кеш, потом сеть
 self.addEventListener('fetch', event => {
-    // Не кешируем POST-запросы, API и т.д.
     if (event.request.method !== 'GET') return;
 
     event.respondWith(
         caches.match(event.request).then(cachedResponse => {
-            // Возвращаем из кеша, если есть; иначе — идём в сеть
             return cachedResponse || fetch(event.request).then(networkResponse => {
-                // Можно дополнительно сохранять новые запросы в кеш, но для статики это необязательно
                 return networkResponse;
             });
         })
     );
-}); 
+});
