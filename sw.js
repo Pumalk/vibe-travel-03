@@ -1,17 +1,16 @@
 /**
  * Service Worker для кеширования статики VIBE TRAVEL 03.
  * Стратегия: cache-first при повторных визитах, сеть при первом.
+ */
 
-
-const CACHE_VERSION = 'vibe-travel-v1.0.5'; // меняй версию при обновлении ресурсов
+const CACHE_VERSION = 'vibe-travel-v1.0.6';
 const CACHE_NAME = `static-${CACHE_VERSION}`;
 
-// Ресурсы, которые нужно закешировать при установке
 const PRECACHE_ASSETS = [
     '/vibe-travel-03/',
     '/vibe-travel-03/index.html',
 
-    // CSS (модульная структура)
+    // CSS
     '/vibe-travel-03/src/css/style.css',
     '/vibe-travel-03/src/css/variables.css',
     '/vibe-travel-03/src/css/base.css',
@@ -54,6 +53,37 @@ const PRECACHE_ASSETS = [
     '/vibe-travel-03/assets/images/left down.svg',
     '/vibe-travel-03/assets/images/right down.svg',
 
+    // Галерея
+    '/vibe-travel-03/assets/gallery/1.1.webp',
+    '/vibe-travel-03/assets/gallery/1.2.webp',
+    '/vibe-travel-03/assets/gallery/1.3.webp',
+    '/vibe-travel-03/assets/gallery/2.1.webp',
+    '/vibe-travel-03/assets/gallery/2.2.webp',
+    '/vibe-travel-03/assets/gallery/2.3.webp',
+    '/vibe-travel-03/assets/gallery/3.1.webp',
+    '/vibe-travel-03/assets/gallery/3.2.webp',
+    '/vibe-travel-03/assets/gallery/3.3.webp',
+    '/vibe-travel-03/assets/gallery/4.1.webp',
+    '/vibe-travel-03/assets/gallery/4.2.webp',
+    '/vibe-travel-03/assets/gallery/5.1.webp',
+    '/vibe-travel-03/assets/gallery/5.2.webp',
+    '/vibe-travel-03/assets/gallery/6.1.webp',
+    '/vibe-travel-03/assets/gallery/6.2.webp',
+    '/vibe-travel-03/assets/gallery/7.1.webp',
+    '/vibe-travel-03/assets/gallery/7.2.webp',
+    '/vibe-travel-03/assets/gallery/8.1.webp',
+    '/vibe-travel-03/assets/gallery/8.2.webp',
+    '/vibe-travel-03/assets/gallery/9.1.webp',
+    '/vibe-travel-03/assets/gallery/9.2.webp',
+    '/vibe-travel-03/assets/gallery/10.1.webp',
+    '/vibe-travel-03/assets/gallery/10.2.webp',
+    '/vibe-travel-03/assets/gallery/10.3.webp',
+
+    // События
+    '/vibe-travel-03/assets/events/altargana_fest.webp',
+    '/vibe-travel-03/assets/events/golos_kochevnikov.webp',
+    '/vibe-travel-03/assets/events/uude_jubilee.webp',
+
     // Favicon
     '/vibe-travel-03/assets/favicon/favicon-96x96.png',
     '/vibe-travel-03/assets/favicon/favicon.svg',
@@ -75,7 +105,6 @@ self.addEventListener('install', event => {
     self.skipWaiting();
 });
 
-// Активация: удаляем старые версии кеша
 self.addEventListener('activate', event => {
     event.waitUntil(
         caches.keys().then(keys => {
@@ -90,12 +119,9 @@ self.addEventListener('activate', event => {
 // Обработка запросов: сначала кеш, потом сеть
 self.addEventListener('fetch', event => {
     if (event.request.method !== 'GET') return;
-
     event.respondWith(
         caches.match(event.request).then(cachedResponse => {
-            return cachedResponse || fetch(event.request).then(networkResponse => {
-                return networkResponse;
-            });
+            return cachedResponse || fetch(event.request);
         })
     );
-}); */
+});
