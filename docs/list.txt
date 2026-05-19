@@ -1,0 +1,60 @@
+=== VIBE TRAVEL 03 — Описание контента (list.txt) ===
+
+1. Тунка Trip: вулканы, Аршан и горный вайб
+   1.1 Посёлок Аршан (1.1.webp) — https://ulan.mk.ru/photo/gallery/44883-881514.html
+   1.2 Водопады Аршана (1.2.webp) — https://greenexpress.ru/location/landmark/arshan/
+   1.3 Долина потухших вулканов (1.3.webp) — https://idilesom.com/buryat/places/5986
+
+2. Urban Улан-Удэ: буузы, стрит-арт и закат
+   2.1 Площадь Советов (2.1.webp) — https://gazetarb.ru/news/1295/
+   2.2 Улица Ленина (2.2.webp) — https://liveangarsk.ru/image/86050-arbat-po-ulan-u
+   2.3 Дацан Ринпоче Багша (2.3.webp) — https://www.drive2.ru/l/585781038567916150/
+
+3. Баргузинский roadtrip: к лику Янжимы
+   3.1 Село Баргузин (3.1.webp) — https://me-frai.livejournal.com/283330.html
+   3.2 Лик богини Янжимы (3.2.webp) — https://les.media/articles/617319-barguzinskaya-dolina-ocharovanie-buryatii
+   3.3 Сувинская Саксония (3.3.webp) — https://yandex.com/maps/-/CPsGy6Li
+
+4. В гости к семейским
+   4.1 Тарбагатай (4.1.webp) — https://ru.wikipedia.org/wiki/Тарбагатай_(Тарбагатайский_район)
+   4.2 Усадьба староверов (4.2.webp) — https://yandex.ru/maps/-/CPsGy0Mw
+
+5. Чивыркуй Chill: тёплый Байкал
+   5.1 Чивыркуйский залив (5.1.webp) — https://rtraveler.ru/photo/53144/
+   5.2 Бухта Змеиная (5.2.webp) — https://yandex.ru/maps/-/CPsGyTMc
+
+6. Иволгинский дацан: перезагрузка сознания
+   6.1 Иволгинский дацан (6.1.webp) — https://cont.ws/@nikkuro/1669182
+   6.2 Ступы дацана (6.2.webp) — https://dzen.ru/a/aRSvUg6jLCTDcC3B
+
+7. Север Байкала: солнечный BAM
+   7.1 Северобайкальск (7.1.webp) — https://bur.aif.ru/society/gorod_peremen_u_severobaykalska_bolshie_perspektivy_razvitiya
+   7.2 Ярки (7.2.webp) — https://nsb.intourist.ru/info/russia/buryatiya/severobajkaljsk/excursions/bajkaljskie-robinzoni?nearestDate=2025-07-16T00:00:00Z
+
+8. Кяхта: чайный путь и купеческий вайб
+   8.1 Кяхта (8.1.webp) — https://ru.wikivoyage.org/wiki/Файл:View-1_Kyakhta-WV.jpg
+   8.2 Краеведческий музей (8.2.webp) — https://minkultrb.ru/news/nazproekt/29856-kyakhtinskiy-kraevedcheskiy-muzey-raznoobrazit-svoyu-unikalnuyu-ekspozitsiyu-novym-sovremennym-oboru/
+
+9. Горячинск Escape: термы и Байкал
+   9.1 Курорт Горячинск (9.1.webp) — https://commons.wikimedia.org/wiki/File:Курорт_%22Горячинск%22_в_Бурятии._2023_год.jpg
+   9.2 Берег Байкала (9.2.webp) — https://a1.drive-data.ru/XEAAAgCwYeA-1920.jpg
+
+10. Дацаны Заиграевской долины: Ацагат и Шулут
+   10.1 Ацагатский дацан (10.1.webp) — https://jassotour.ru/upload/iblock/437/дацан%20зима1.jpg
+   10.2 Музей Агвана Доржиева (10.2.webp) — https://jassotour.ru/upload/iblock/52c/_-_-_-_.jpeg
+   10.3 Шулутский дацан (10.3.webp) — https://yandex.ru/maps/-/CPsGBE7O
+
+=== События ===
+Алтаргана-2026 (altargana_fest.webp)
+Голос кочевников 2026 (golos_kochevnikov.webp)
+Юбилей города Улан-Удэ (uude_jubilee.webp)
+
+=== Основные изображения сайта ===
+hero.webp (фоновое изображение главной страницы) — https://www.drive2.ru/b/719736189447308932/?utm_medium=organic&utm_source=yandexsmartcamera
+buuza.webp (иконка пасхалки)
+logo_white.svg (логотип для светлого фона)
+logo_black.svg (логотип для тёмного фона)
+left up.svg, right up.svg, left down.svg, right down.svg (декоративные углы)
+
+=== Фавиконки ===
+favicon-96x96.png, favicon.svg, favicon.ico, apple-touch-icon.png
