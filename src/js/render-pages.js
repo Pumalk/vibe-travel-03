@@ -65,8 +65,6 @@ function renderRoutes() {
           <option value="1 день">1 день</option>
           <option value="2 дня">2 дня</option>
           <option value="3 дня">3 дня</option>
-          <option value="4 дня">4 дня</option>
-          <option value="5 дней">5 дней</option>
         </select>
         <select class="filter-select" id="filter-budget">
           <option value="">Любой бюджет</option>

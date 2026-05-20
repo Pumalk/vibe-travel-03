@@ -21,7 +21,7 @@
 
 ## Требования
 
-- Любой современный браузер (Chrome, Firefox, Safari, Edge)
+- Любой современный браузер (Chrome, Firefox, Safari, Edge, Yandex)
 - Для локального запуска — любой статический сервер (Live Server, `npx serve`, Python HTTP-сервер)
 - Для работы карт — API-ключ Яндекс.Карт
 
@@ -92,7 +92,3 @@
 ## Контакты
 Автор: Лебедев Кирилл Артёмович  
 Репозиторий: [github.com/Pumalk/vibe-travel-03](https://github.com/Pumalk/vibe-travel-03)  
-Сайт: [pumalk.github.io/vibe-travel-03](https://pumalk.github.io/vibe-travel-03/)
-
-
-
