@@ -3,7 +3,7 @@
  * Стратегия: cache-first при повторных визитах, сеть при первом.
  */
 
-const CACHE_VERSION = 'vibe-travel-v1.0.6';
+const CACHE_VERSION = 'vibe-travel-v1.1.0';
 const CACHE_NAME = `static-${CACHE_VERSION}`;
 
 const PRECACHE_ASSETS = [
